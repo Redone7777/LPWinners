@@ -1,0 +1,445 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   🎮 LP WINNERS - LIQUID GLASS DESIGN SYSTEM
+   ═══════════════════════════════════════════════════════════════════════════
+   Système de design premium inspiré du glassmorphisme Apple 
+   adapté à l'univers sombre et néon de l'esport
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🎨 VARIABLES CSS GLOBALES
+   ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Couleurs primaires */
+  --color-void-900: #0a0a0f;
+  --color-void-800: #0d0d14;
+  --color-void-700: #12121c;
+  --color-void-600: #1a1a28;
+  --color-void-500: #252536;
+  
+  /* Accents */
+  --color-arcane: #a855f7;
+  --color-electric: #3b82f6;
+  --color-neon: #d946ef;
+  
+  /* Verre */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-blur: 12px;
+  
+  /* Typographie */
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📝 RESET & BASE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-display);
+    background: var(--color-void-900);
+    color: rgba(255, 255, 255, 0.9);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  /* Scrollbar personnalisée */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--color-void-800);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.3);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.5);
+  }
+  
+  /* Sélection de texte */
+  ::selection {
+    background: rgba(168, 85, 247, 0.3);
+    color: white;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🔮 COMPOSANTS LIQUID GLASS
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  
+  /* ─────────────────────────────────────────────────────────────────────────
+     GLASS CARD - Carte de base en verre dépoli
+     ───────────────────────────────────────────────────────────────────────── */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+  }
+  
+  .glass-card {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-smooth);
+  }
+  
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%,
+      rgba(168, 85, 247, 0.1) 100%
+    );
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  
+  .glass-card:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 30px rgba(168, 85, 247, 0.1);
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────
+     GLASS PANEL - Panneau latéral en verre
+     ───────────────────────────────────────────────────────────────────────── */
+  .glass-panel {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────
+     GLASS BUTTON - Bouton en verre
+     ───────────────────────────────────────────────────────────────────────── */
+  .glass-button {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+  }
+  
+  .glass-button.active,
+  .glass-button:active {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────
+     GLOW EFFECTS - Effets de lueur
+     ───────────────────────────────────────────────────────────────────────── */
+  .glow-arcane {
+    box-shadow: 
+      0 0 20px rgba(168, 85, 247, 0.4),
+      0 0 40px rgba(168, 85, 247, 0.2);
+  }
+  
+  .glow-text-arcane {
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+  }
+  
+  .glow-icon {
+    filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.6));
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────
+     NAV ICON - Icône de navigation avec effet de lueur
+     ───────────────────────────────────────────────────────────────────────── */
+  .nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .nav-icon:hover {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .nav-icon.active {
+    color: var(--color-arcane);
+    background: rgba(168, 85, 247, 0.15);
+  }
+  
+  .nav-icon.active::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    background: radial-gradient(
+      circle at center,
+      rgba(168, 85, 247, 0.3) 0%,
+      transparent 70%
+    );
+    z-index: -1;
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────
+     FILTER CHIP - Pilule de filtre
+     ───────────────────────────────────────────────────────────────────────── */
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  
+  .filter-chip:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .filter-chip.active {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.4);
+    color: white;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────────────────
+     CHAMPION CARD - Carte de champion
+     ───────────────────────────────────────────────────────────────────────── */
+  .champion-card-glass {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+  }
+  
+  .champion-card-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 50%,
+      rgba(10, 10, 15, 0.7) 75%,
+      rgba(10, 10, 15, 0.95) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .champion-card-glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: 2;
+    transition: all var(--transition-smooth);
+  }
+  
+  .champion-card-glass:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.5),
+      0 0 40px rgba(168, 85, 247, 0.15);
+  }
+  
+  .champion-card-glass:hover::after {
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.1);
+  }
+  
+  .champion-card-glass img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+  
+  .champion-card-glass:hover img {
+    transform: scale(1.1);
+  }
+  
+  .champion-card-glass .card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    z-index: 3;
+  }
+  
+  .champion-card-glass .champion-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  
+  .champion-card-glass .champion-title {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+  }
+  
+  .champion-card-glass .role-icon {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    color: rgba(255, 255, 255, 0.6);
+    z-index: 3;
+    transition: all var(--transition-fast);
+  }
+  
+  .champion-card-glass:hover .role-icon {
+    color: var(--color-arcane);
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🎯 UTILITAIRES PERSONNALISÉS
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer utilities {
+  
+  /* Gradient de texte */
+  .text-gradient {
+    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 50%, #d946ef 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Fond cosmique animé */
+  .bg-cosmic {
+    background: 
+      radial-gradient(ellipse at 20% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(217, 70, 239, 0.05) 0%, transparent 70%),
+      linear-gradient(180deg, #0a0a0f 0%, #0d0d14 100%);
+  }
+  
+  /* Bordure gradient */
+  .border-gradient {
+    border: 1px solid transparent;
+    background: 
+      linear-gradient(var(--color-void-700), var(--color-void-700)) padding-box,
+      linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(59, 130, 246, 0.2)) border-box;
+  }
+  
+  /* Animation pulse de lueur */
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  /* Masque de dégradé vertical */
+  .mask-gradient-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📱 RESPONSIVE ADJUSTMENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .glass-card {
+    border-radius: 16px;
+  }
+  
+  .champion-card-glass {
+    border-radius: 16px;
+  }
+}

@@ -1,22 +1,31 @@
-import { useState, useEffect } from 'react'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Layout } from './components/layout';
+import Home from './pages/Home';
+import Champions from './pages/Champions';
+import ChampionDetail from './pages/ChampionDetail';
+import Profile from './pages/Profile';
+import Forum from './pages/Forum';
+import ForumPost from './pages/ForumPost';
+import ProStats from './pages/ProStats';
+import './styles/index.css';
 
 function App() {
-  const [message, setMessage] = useState('')
-
-  useEffect(() => {
-    fetch('http://localhost:8000/')
-      .then(response => response.json())
-      .then(data => setMessage(data.message))
-      .catch(error => console.error('Error fetching data:', error));
-  }, [])
-
   return (
-    <div className="App">
-      <h1>LP Winners</h1>
-      {message && <p>Backend response: {message}</p>}
-    </div>
-  )
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/champions" element={<Champions />} />
+          <Route path="/champions/:id" element={<ChampionDetail />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:name" element={<Profile />} />
+          <Route path="/forum" element={<Forum />} />
+          <Route path="/forum/:id" element={<ForumPost />} />
+          <Route path="/pro-stats" element={<ProStats />} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
 }
 
-export default App
+export default App;

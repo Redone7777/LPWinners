@@ -8,8 +8,7 @@ Créer les pages du site et afficher les infos.
 ## 📅 Planning Simple
 
 ### Étape 1 : La Coquille Vide
-- [ ] Créer le projet avec Vite (`npm create vite@latest` ou avec Bun).
-- [ ] Nettoyer le projet (supprimer les fichiers exemples inutiles).
+- [ ] Créer le projet avec Vite (avec Bun).
 - [ ] Installer **React Router** pour pouvoir changer de page.
 - [ ] Créer 3 pages vides : `Accueil`, `Champions`, `Forum`.
 - [ ] Faire une barre de navigation (Menu) simple pour passer d'une page à l'autre.

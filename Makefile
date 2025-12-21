@@ -3,12 +3,13 @@
 all: setup dev
 
 dev:
+	@mkdir -p .logs
 	@echo "Démarrage des services..."
-	@cd Back && bash -c 'source venv/bin/activate && uvicorn main:app --reload > ../back.log 2>&1 & echo $$! > ../back.pid'
-	@cd Front && bash -c 'bun run dev > ../front.log 2>&1 & echo $$! > ../front.pid'
+	@cd Back && bash -c 'source venv/bin/activate && uvicorn main:app --reload > ../.logs/back.log 2>&1 & echo $$! > ../.logs/back.pid'
+	@cd Front && bash -c 'bun run dev > ../.logs/front.log 2>&1 & echo $$! > ../.logs/front.pid'
 	@sleep 2
-	@if [ -f back.pid ]; then echo "✓ Backend: http://localhost:8000 (PID: $$(cat back.pid))"; else echo "✗ Backend non démarré"; fi
-	@if [ -f front.pid ]; then echo "✓ Frontend: http://localhost:5173 (PID: $$(cat front.pid))"; else echo "✗ Frontend non démarré"; fi
+	@if [ -f .logs/back.pid ]; then echo "✓ Backend: http://localhost:8000 (PID: $$(cat .logs/back.pid))"; else echo "✗ Backend non démarré"; fi
+	@if [ -f .logs/front.pid ]; then echo "✓ Frontend: http://localhost:5173 (PID: $$(cat .logs/front.pid))"; else echo "✗ Frontend non démarré"; fi
 	@echo "Arrêt: make stop"
 
 setup:
@@ -24,11 +25,10 @@ back:
 
 stop:
 	@echo "Arrêt des services..."
-	@-if [ -f back.pid ]; then PID=$$(cat back.pid); pkill -P $$PID 2>/dev/null || true; kill $$PID 2>/dev/null || true; rm -f back.pid; echo "✓ Backend arrêté"; else echo "✓ Backend déjà arrêté"; fi
-	@-if [ -f front.pid ]; then PID=$$(cat front.pid); pkill -P $$PID 2>/dev/null || true; kill $$PID 2>/dev/null || true; rm -f front.pid; echo "✓ Frontend arrêté"; else echo "✓ Frontend déjà arrêté"; fi
+	@-if [ -f .logs/back.pid ]; then PID=$$(cat .logs/back.pid); pkill -P $$PID 2>/dev/null || true; kill $$PID 2>/dev/null || true; rm -f .logs/back.pid; echo "✓ Backend arrêté"; else echo "✓ Backend déjà arrêté"; fi
+	@-if [ -f .logs/front.pid ]; then PID=$$(cat .logs/front.pid); pkill -P $$PID 2>/dev/null || true; kill $$PID 2>/dev/null || true; rm -f .logs/front.pid; echo "✓ Frontend arrêté"; else echo "✓ Frontend déjà arrêté"; fi
 
 clean:
 	@-find Back -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
-	@-rm -rf Back/venv Front/node_modules Front/bun.lock
-	@-rm -f back.pid front.pid back.log front.log
+	@-rm -rf Back/venv Front/node_modules Front/bun.lock .logs
 	@echo "✓ Nettoyage terminé"
