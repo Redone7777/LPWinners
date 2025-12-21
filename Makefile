@@ -28,6 +28,7 @@ stop:
 	@-if [ -f front.pid ]; then PID=$$(cat front.pid); pkill -P $$PID 2>/dev/null || true; kill $$PID 2>/dev/null || true; rm -f front.pid; echo "✓ Frontend arrêté"; else echo "✓ Frontend déjà arrêté"; fi
 
 clean:
+	@-find Back -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 	@-rm -rf Back/venv Front/node_modules Front/bun.lock
 	@-rm -f back.pid front.pid back.log front.log
 	@echo "✓ Nettoyage terminé"
