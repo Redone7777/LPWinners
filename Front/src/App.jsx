@@ -7,13 +7,18 @@ import Profile from './pages/Profile';
 import Forum from './pages/Forum';
 import ForumPost from './pages/ForumPost';
 import ProStats from './pages/ProStats';
+import Login from './pages/Login';
 import './styles/index.css';
 
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
+      <Routes>
+        {/* Route sans layout pour la page de connexion */}
+        <Route path="/login" element={<Login />} />
+        
+        {/* Routes avec layout */}
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/champions" element={<Champions />} />
           <Route path="/champions/:id" element={<ChampionDetail />} />
@@ -22,8 +27,8 @@ function App() {
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/:id" element={<ForumPost />} />
           <Route path="/pro-stats" element={<ProStats />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </Router>
   );
 }

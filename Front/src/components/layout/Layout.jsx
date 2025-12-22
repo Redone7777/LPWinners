@@ -9,9 +9,10 @@
  * - Zone de contenu principale
  */
 
+import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <div className="relative min-h-screen bg-void-900 overflow-x-hidden">
       {/* ─────────────────────────────────────────────────────────────────────
@@ -63,7 +64,7 @@ const Layout = ({ children }) => {
           Contenu principal
       ───────────────────────────────────────────────────────────────────────── */}
       <main className="ml-24 min-h-screen">
-        {children}
+        <Outlet />
       </main>
     </div>
   );

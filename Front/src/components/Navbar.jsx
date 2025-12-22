@@ -11,6 +11,7 @@ function Navbar() {
         <li><Link to="/profile">Profil</Link></li>
         <li><Link to="/forum">Forum</Link></li>
         <li><Link to="/pro-stats">Stats Pro</Link></li>
+        <li><Link to="/login">Connexion</Link></li>
       </ul>
     </nav>
   );
