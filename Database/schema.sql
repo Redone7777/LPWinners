@@ -1,11 +1,12 @@
 -- CREATE DATABASE lpwinners;
 -- USE lpwinners;
 
+DROP TABLE IF EXISTS utilisateurs, summoner, rune, rune_root, item, spell, skin, champion CASCADE;
+
 CREATE TABLE champion (
     -- Info général
-    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- utiliser pour identifier le champion dans la base de données
+    id INT PRIMARY KEY,
     riot_id VARCHAR(50) UNIQUE NOT NULL,
-    riot_key INT NOT NULL,
     name VARCHAR(50) NOT NULL,
     title VARCHAR(100),
 
@@ -53,10 +54,9 @@ CREATE TABLE champion (
 );
 
 CREATE TABLE skin (
-    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- utiliser pour identifier le skin dans la base de données
+    id INT PRIMARY KEY, -- utiliser pour identifier le skin dans la base de données
     champion_id INT REFERENCES champion(id) ON DELETE CASCADE, -- foreign key pour identifier le champion
     
-    riot_skin_id VARCHAR(20) NOT NULL,
     num INT,
     name VARCHAR(150),
     chromas BOOLEAN DEFAULT FALSE,
@@ -83,4 +83,67 @@ CREATE TABLE spell (
     effect JSONB,
 
     image_spell VARCHAR(100)
+);
+
+CREATE TABLE item (
+    id INT PRIMARY KEY,
+    name VARCHAR(200),
+    description TEXT,
+    plaintext TEXT,
+    from_items VARCHAR(50)[],
+    into_items VARCHAR(50)[],
+
+    depth INT, -- Pour les recettes par exemple zonya depth = 3
+    in_store BOOLEAN DEFAULT TRUE,
+
+    image_icon VARCHAR(100),
+
+    cost_base INT,
+    cost_total INT,
+    purchasable BOOLEAN DEFAULT TRUE,
+    sell_price INT,
+
+    tags VARCHAR(50)[],
+    maps JSONB,
+    stats JSONB,
+    effect JSONB
+);
+
+
+CREATE TABLE rune_root (
+    rune_root_id INT PRIMARY KEY,
+    rune_root_key VARCHAR(50),
+    image_icon VARCHAR(100),
+    name VARCHAR(50)
+);
+
+CREATE TABLE rune (
+    rune_id INT PRIMARY KEY,
+    rune_root_id INT REFERENCES rune_root(rune_root_id) ON DELETE CASCADE,
+
+    slot_number INT,
+    runes_mineur_key VARCHAR(50),
+    image_icon VARCHAR(100),
+    name VARCHAR(50),
+    shortDesc TEXT,
+    longDesc TEXT
+);
+
+CREATE TABLE summoner (
+    id INT PRIMARY KEY,
+    riot_key VARCHAR(50),
+    name VARCHAR(50),
+    description TEXT,
+    cooldown INT,
+    summoner_level INT,
+    range INT,
+    image_icon VARCHAR(100),
+    modes VARCHAR(50)[]
+);
+
+CREATE TABLE utilisateurs (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    pseudo VARCHAR(50) UNIQUE NOT NULL,
+    mail VARCHAR(100) UNIQUE NOT NULL,
+    password TEXT NOT NULL
 );
