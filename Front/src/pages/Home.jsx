@@ -34,7 +34,7 @@ function Home() {
               Rechercher un joueur
             </GlassButton>
           </Link>
-          <Link to="/champions">
+          <Link to="/game-data">
             <GlassButton size="lg">
               <GridIcon size={18} />
               Explorer les champions
@@ -48,7 +48,7 @@ function Home() {
             icon={<GridIcon size={28} />}
             title="Champions"
             description="Explorez tous les champions, leurs statistiques et les meilleurs builds."
-            link="/champions"
+            link="/game-data"
           />
           <FeatureCard 
             icon={<StatsIcon size={28} />}

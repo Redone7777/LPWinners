@@ -11,32 +11,39 @@
  */
 
 import { NavLink, useLocation } from 'react-router-dom';
-import { 
-  LogoIcon, 
-  HomeIcon, 
-  GridIcon, 
-  SearchIcon, 
-  BellIcon, 
+import { useAuth } from '../../context/AuthContext';
+import {
+  LogoIcon,
+  HomeIcon,
+  GridIcon,
+  SearchIcon,
+  BellIcon,
   UserIcon,
+  LoginIcon,
   ChatIcon,
   StatsIcon
 } from '../icons';
 
 const Sidebar = () => {
   const location = useLocation();
+  const { user } = useAuth();
   
-  // Éléments de navigation
+  // Éléments de navigation principale
   const navItems = [
     { path: '/', icon: HomeIcon, label: 'Accueil' },
-    { path: '/champions', icon: GridIcon, label: 'Champions' },
-    { path: '/profile', icon: SearchIcon, label: 'Rechercher' },
+    { path: '/game-data', icon: GridIcon, label: 'Jeu' },
+    { path: '/players', icon: SearchIcon, label: 'Joueurs' },
     { path: '/forum', icon: ChatIcon, label: 'Forum' },
     { path: '/pro-stats', icon: StatsIcon, label: 'Stats Pro' },
   ];
-  
+
+  // Éléments de navigation secondaire (bas)
   const bottomItems = [
     { path: '/notifications', icon: BellIcon, label: 'Notifications' },
-    { path: '/settings', icon: UserIcon, label: 'Profil' },
+    // Affiche Profil si connecté, sinon Connexion
+    user 
+      ? { path: '/profile', icon: UserIcon, label: 'Profil' }
+      : { path: '/login', icon: LoginIcon, label: 'Connexion' }
   ];
   
   return (
@@ -79,7 +86,7 @@ const Sidebar = () => {
           />
         ))}
       </nav>
-      
+
       {/* ─────────────────────────────────────────────────────────────────────
           Navigation secondaire (bas)
       ───────────────────────────────────────────────────────────────────────── */}

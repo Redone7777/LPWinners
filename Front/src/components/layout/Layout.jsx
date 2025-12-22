@@ -7,13 +7,25 @@
  * - Arrière-plan cosmique sombre
  * - Sidebar de navigation flottante
  * - Zone de contenu principale
+ * - Curseur futuriste interactif
  */
 
 import Sidebar from './Sidebar';
+import FuturisticCursor from '../FuturisticCursor';
 
 const Layout = ({ children }) => {
   return (
-    <div className="relative min-h-screen bg-void-900 overflow-x-hidden">
+    <div className="relative min-h-screen bg-void-900 overflow-x-hidden" draggable="false">
+      {/* ─────────────────────────────────────────────────────────────────────
+          Curseur futuriste personnalisé
+      ───────────────────────────────────────────────────────────────────────── */}
+      <FuturisticCursor />
+      
+      {/* ─────────────────────────────────────────────────────────────────────
+          Effet de lueur réactive au curseur
+      ───────────────────────────────────────────────────────────────────────── */}
+      <div className="bg-cursor-reactive" />
+      
       {/* ─────────────────────────────────────────────────────────────────────
           Arrière-plan cosmique avec gradients
       ───────────────────────────────────────────────────────────────────────── */}

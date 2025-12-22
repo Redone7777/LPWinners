@@ -50,6 +50,7 @@ function ChampionCard({ champion }) {
           group-hover:scale-110
         "
         loading="lazy"
+        draggable="false"
       />
       
       {/* ─────────────────────────────────────────────────────────────────────

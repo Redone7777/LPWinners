@@ -47,6 +47,19 @@
     box-sizing: border-box;
   }
   
+  /* Désactiver le drag & drop et la sélection pour TOUS les éléments */
+  * {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Réactiver la sélection pour les champs de texte pour qu'ils restent utilisables */
+  input, textarea, [contenteditable] {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -441,5 +454,142 @@
   
   .champion-card-glass {
     border-radius: 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🖱️ CURSEUR LIQUID GLASS - Design minimaliste et élégant
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Cacher le curseur natif */
+* {
+  cursor: none !important;
+}
+
+/* Variables de positionnement pour effets réactifs */
+:root {
+  --mouse-x: 50vw;
+  --mouse-y: 50vh;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Curseur principal - Effet verre dépoli
+   ───────────────────────────────────────────────────────────────────────── */
+.cursor-glass {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  will-change: transform;
+  
+  /* Effet glassmorphisme */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  
+  /* Transition douce */
+  transition: 
+    width 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* État hover - Le curseur s'agrandit subtilement */
+.cursor-glass.hovering {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.12) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  border-color: rgba(168, 85, 247, 0.25);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(168, 85, 247, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+/* État clic - Effet de pression */
+.cursor-glass.clicking {
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 0 12px rgba(168, 85, 247, 0.2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Glow subtil qui suit le curseur
+   ───────────────────────────────────────────────────────────────────────── */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  will-change: transform;
+  
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.04) 0%,
+    rgba(168, 85, 247, 0.02) 30%,
+    transparent 60%
+  );
+  
+  transition: opacity 0.5s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Effet de lueur réactive sur l'arrière-plan
+   ───────────────────────────────────────────────────────────────────────── */
+.bg-cursor-reactive {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y),
+    rgba(168, 85, 247, 0.03) 0%,
+    transparent 40%
+  );
+  transition: background 0.3s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Désactiver le curseur custom sur mobile
+   ───────────────────────────────────────────────────────────────────────── */
+@media (max-width: 768px), (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+  
+  .cursor-glass,
+  .cursor-glow,
+  .bg-cursor-reactive {
+    display: none !important;
   }
 }
