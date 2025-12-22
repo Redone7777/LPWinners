@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BellIcon, ChevronLeftIcon } from '../components/icons';
+import { BellIcon, ChevronLeftIcon } from '../../components/icons';
 
 function Notifications() {
   const navigate = useNavigate();

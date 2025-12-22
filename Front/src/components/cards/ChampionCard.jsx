@@ -8,7 +8,7 @@
  */
 
 import { Link } from 'react-router-dom';
-import { MarksmanIcon, MageIcon, AssassinIcon, FighterIcon, TankIcon, SupportClassIcon } from './icons';
+import { MarksmanIcon, MageIcon, AssassinIcon, FighterIcon, TankIcon, SupportClassIcon } from '../icons';
 
 // Map des icônes de rôle
 const roleIcons = {

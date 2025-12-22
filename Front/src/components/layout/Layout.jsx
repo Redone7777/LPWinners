@@ -11,7 +11,7 @@
  */
 
 import Sidebar from './Sidebar';
-import FuturisticCursor from '../FuturisticCursor';
+import FuturisticCursor from '../common/FuturisticCursor';
 
 const Layout = ({ children }) => {
   return (

@@ -11,10 +11,10 @@
  */
 
 import { useState, useEffect } from 'react';
-import ChampionCard from '../components/ChampionCard';
-import { GlassCard, FilterChip } from '../components/ui';
-import { 
-  ChevronLeftIcon, 
+import ChampionCard from '../../components/cards/ChampionCard';
+import { GlassCard, FilterChip } from '../../components/ui';
+import {
+  ChevronLeftIcon,
   ChevronDownIcon,
   GridIcon,
   SearchIcon,
@@ -28,7 +28,7 @@ import {
   AssassinIcon,
   FighterIcon,
   TankIcon
-} from '../components/icons';
+} from '../../components/icons';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DONNÉES DE DÉMONSTRATION

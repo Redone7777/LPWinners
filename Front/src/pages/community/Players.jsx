@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { SearchIcon, ChevronLeftIcon } from '../components/icons';
+import { SearchIcon, ChevronLeftIcon } from '../../components/icons';
 
 function Players() {
   const { name } = useParams();

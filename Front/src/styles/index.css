@@ -34,9 +34,9 @@
   --font-display: 'Inter', system-ui, -apple-system, sans-serif;
   
   /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -441,6 +441,158 @@
   .mask-gradient-b {
     -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     RANGE SLIDER - Barre de progression animée
+     ───────────────────────────────────────────────────────────────────────── */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: transparent;
+    outline: none;
+    position: relative;
+  }
+
+  /* Track - La piste de fond */
+  input[type="range"]::-webkit-slider-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    position: relative;
+  }
+
+  input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+  }
+
+  /* Progress - La partie remplie (effet de progression animée) */
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(
+      90deg,
+      rgba(168, 85, 247, 0.6) 0%,
+      rgba(168, 85, 247, 0.4) 100%
+    );
+    border-radius: 10px;
+    box-shadow:
+      0 0 10px rgba(168, 85, 247, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    animation: progress-glow 2s ease-in-out infinite;
+  }
+
+  input[type="range"]::-moz-range-progress {
+    background: linear-gradient(
+      90deg,
+      rgba(168, 85, 247, 0.6) 0%,
+      rgba(168, 85, 247, 0.4) 100%
+    );
+    border-radius: 10px;
+    height: 6px;
+    box-shadow:
+      0 0 10px rgba(168, 85, 247, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    animation: progress-glow 2s ease-in-out infinite;
+  }
+
+  /* Thumb - Le bouton de défilement */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(168, 85, 247, 0.8) 100%
+    );
+    border: 2px solid rgba(168, 85, 247, 0.4);
+    cursor: pointer;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(168, 85, 247, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    margin-top: -6px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(168, 85, 247, 0.8) 100%
+    );
+    border: 2px solid rgba(168, 85, 247, 0.4);
+    cursor: pointer;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(168, 85, 247, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover states */
+  input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.2);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(168, 85, 247, 0.6),
+      inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    border-color: rgba(168, 85, 247, 0.6);
+  }
+
+  input[type="range"]:hover::-moz-range-thumb {
+    transform: scale(1.2);
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(168, 85, 247, 0.6),
+      inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    border-color: rgba(168, 85, 247, 0.6);
+  }
+
+  /* Active states */
+  input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.1);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 16px rgba(168, 85, 247, 0.8),
+      inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  }
+
+  input[type="range"]:active::-moz-range-thumb {
+    transform: scale(1.1);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.5),
+      0 0 16px rgba(168, 85, 247, 0.8),
+      inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Animation de pulsation pour la progression */
+  @keyframes progress-glow {
+    0%, 100% {
+      box-shadow:
+        0 0 10px rgba(168, 85, 247, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      box-shadow:
+        0 0 20px rgba(168, 85, 247, 0.5),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    }
   }
 }
 

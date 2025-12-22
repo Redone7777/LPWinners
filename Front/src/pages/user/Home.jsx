@@ -5,8 +5,8 @@
  */
 
 import { Link } from 'react-router-dom';
-import { GlassCard, GlassButton } from '../components/ui';
-import { GridIcon, SearchIcon, StatsIcon, ChatIcon } from '../components/icons';
+import { GlassCard, GlassButton } from '../../components/ui';
+import { GridIcon, SearchIcon, StatsIcon, ChatIcon } from '../../components/icons';
 
 function Home() {
   return (

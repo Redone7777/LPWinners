@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { UserIcon, ChevronLeftIcon } from '../components/icons';
-import { useAuth } from '../context/AuthContext';
+import { UserIcon, ChevronLeftIcon } from '../../components/icons';
+import { useAuth } from '../../shared/context/AuthContext';
 
 function Profile() {
   const navigate = useNavigate();

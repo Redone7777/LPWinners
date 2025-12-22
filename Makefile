@@ -1,34 +1,64 @@
-.PHONY: all dev setup front back clean stop
+PYTHON = python3
+NPM = npm
+VENV_ACTIVATE = . venv/bin/activate
+
+BACK_DIR = Back
+FRONT_DIR = Front
+LOGS_DIR = .logs
+
+.PHONY: all setup dev start front back stop restart clean clean-all logs status build
 
 all: setup dev
 
-dev:
-	@mkdir -p .logs
-	@echo "Démarrage des services..."
-	@cd Back && bash -c 'source venv/bin/activate && uvicorn main:app --reload > ../.logs/back.log 2>&1 & echo $$! > ../.logs/back.pid'
-	@cd Front && bash -c 'bun run dev > ../.logs/front.log 2>&1 & echo $$! > ../.logs/front.pid'
-	@sleep 2
-	@if [ -f .logs/back.pid ]; then echo "✓ Backend: http://localhost:8000 (PID: $$(cat .logs/back.pid))"; else echo "✗ Backend non démarré"; fi
-	@if [ -f .logs/front.pid ]; then echo "✓ Frontend: http://localhost:5173 (PID: $$(cat .logs/front.pid))"; else echo "✗ Frontend non démarré"; fi
-	@echo "Arrêt: make stop"
+setup: install
 
-setup:
-	@cd Back && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt
-	@cd Front && bun install
-	@echo "✓ Installation terminée"
+install:
+	@cd $(BACK_DIR) && $(PYTHON) -m venv venv && $(VENV_ACTIVATE) && pip install -r requirements.txt
+	@cd $(FRONT_DIR) && $(NPM) install
+
+dev: start
+
+start:
+	@mkdir -p $(LOGS_DIR)
+	@cd $(BACK_DIR) && bash -c '$(VENV_ACTIVATE) && uvicorn main:app --reload > ../$(LOGS_DIR)/back.log 2>&1 & echo $$! > ../$(LOGS_DIR)/back.pid'
+	@cd $(FRONT_DIR) && bash -c '$(NPM) run dev > ../$(LOGS_DIR)/front.log 2>&1 & echo $$! > ../$(LOGS_DIR)/front.pid'
+	@sleep 2
+	@if [ -f $(LOGS_DIR)/back.pid ]; then echo "✓ Backend:  http://localhost:8000"; fi
+	@if [ -f $(LOGS_DIR)/front.pid ]; then echo "✓ Frontend: http://localhost:5173"; fi
 
 front:
-	@cd Front && bun run dev
+	@cd $(FRONT_DIR) && $(NPM) run dev
 
 back:
-	@cd Back && . venv/bin/activate && uvicorn main:app --reload
+	@cd $(BACK_DIR) && $(VENV_ACTIVATE) && uvicorn main:app --reload
 
 stop:
-	@echo "Arrêt des services..."
-	@-if [ -f .logs/back.pid ]; then PID=$$(cat .logs/back.pid); pkill -P $$PID 2>/dev/null || true; kill $$PID 2>/dev/null || true; rm -f .logs/back.pid; echo "✓ Backend arrêté"; else echo "✓ Backend déjà arrêté"; fi
-	@-if [ -f .logs/front.pid ]; then PID=$$(cat .logs/front.pid); pkill -P $$PID 2>/dev/null || true; kill $$PID 2>/dev/null || true; rm -f .logs/front.pid; echo "✓ Frontend arrêté"; else echo "✓ Frontend déjà arrêté"; fi
+	@if [ -f $(LOGS_DIR)/back.pid ]; then kill $$(cat $(LOGS_DIR)/back.pid) 2>/dev/null || true; rm -f $(LOGS_DIR)/back.pid; fi
+	@if [ -f $(LOGS_DIR)/front.pid ]; then kill $$(cat $(LOGS_DIR)/front.pid) 2>/dev/null || true; rm -f $(LOGS_DIR)/front.pid; fi
+
+restart: stop start
+
+status:
+	@if [ -f $(LOGS_DIR)/back.pid ] && ps -p $$(cat $(LOGS_DIR)/back.pid) > /dev/null 2>&1; then \
+		echo "✓ Backend:  Running (PID: $$(cat $(LOGS_DIR)/back.pid))"; \
+	else \
+		echo "✗ Backend:  Stopped"; \
+	fi
+	@if [ -f $(LOGS_DIR)/front.pid ] && ps -p $$(cat $(LOGS_DIR)/front.pid) > /dev/null 2>&1; then \
+		echo "✓ Frontend: Running (PID: $$(cat $(LOGS_DIR)/front.pid))"; \
+	else \
+		echo "✗ Frontend: Stopped"; \
+	fi
+
+logs:
+	@tail -f $(LOGS_DIR)/*.log 2>/dev/null || echo "No logs available"
+
+build:
+	@cd $(FRONT_DIR) && $(NPM) run build
 
 clean:
-	@-find Back -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
-	@-rm -rf Back/venv Front/node_modules Front/bun.lock .logs
-	@echo "✓ Nettoyage terminé"
+	@find $(BACK_DIR) -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	@rm -rf $(LOGS_DIR) $(FRONT_DIR)/dist
+
+clean-all: clean
+	@rm -rf $(BACK_DIR)/venv $(FRONT_DIR)/node_modules $(FRONT_DIR)/package-lock.json

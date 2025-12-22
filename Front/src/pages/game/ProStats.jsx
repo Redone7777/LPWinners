@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeftIcon, ChatIcon } from '../components/icons';
+import { ChevronLeftIcon, StatsIcon } from '../../components/icons';
 
-function Forum() {
+function ProStats() {
   const navigate = useNavigate();
-  const [posts, setPosts] = useState([]);
+  const [matches, setMatches] = useState([]);
 
   useEffect(() => {
-    // TODO: Fetch forum posts from API
+    // TODO: Fetch pro matches from API
   }, []);
 
   return (
@@ -30,8 +30,8 @@ function Forum() {
             <ChevronLeftIcon size={20} />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white">Forum</h1>
-            <p className="text-white/50 text-sm">Échangez avec la communauté LP Winners</p>
+            <h1 className="text-2xl font-bold text-white">Statistiques Pro</h1>
+            <p className="text-white/50 text-sm">Suivez les matchs et performances des équipes professionnelles</p>
           </div>
         </div>
       </header>
@@ -39,21 +39,21 @@ function Forum() {
       {/* ═══════════════════════════════════════════════════════════════════
           CONTENU
       ═══════════════════════════════════════════════════════════════════ */}
-      {posts.length > 0 ? (
+      {matches.length > 0 ? (
         <div className="space-y-4">
-          {/* Liste des posts */}
+          {/* Liste des matchs pro */}
         </div>
       ) : (
         <div className="
           text-center py-16
           text-white/40
         ">
-          <ChatIcon size={48} className="mx-auto mb-4 opacity-50" />
+          <StatsIcon size={48} className="mx-auto mb-4 opacity-50" />
           <p className="text-lg">
-            Aucune discussion pour le moment
+            Aucun match professionnel disponible
           </p>
           <p className="text-sm mt-2">
-            Soyez le premier à lancer une discussion !
+            Les matchs à venir apparaîtront ici
           </p>
         </div>
       )}
@@ -61,4 +61,4 @@ function Forum() {
   );
 }
 
-export default Forum;
+export default ProStats;
