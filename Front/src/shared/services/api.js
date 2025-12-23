@@ -47,3 +47,69 @@ export const getProMatches = async () => {
   const response = await fetch(`${API_BASE_URL}/api/pro/matches`);
   return response.json();
 };
+
+// Authentication
+export const loginUser = async (email, password) => {
+  const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Erreur de connexion');
+  }
+  return response.json();
+};
+
+export const registerUser = async (username, email, password) => {
+  const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, email, password })
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Erreur d\'inscription');
+  }
+  return response.json();
+};
+
+// Items
+export const getItems = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/items`);
+  return response.json();
+};
+
+// Spells
+export const getSpells = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/spells`);
+  return response.json();
+};
+
+// Runes
+export const getRunes = async () => {
+  const response = await fetch(`${API_BASE_URL}/api/runes`);
+  return response.json();
+};
+
+// Comments
+export const getPostComments = async (postId) => {
+  const response = await fetch(`${API_BASE_URL}/api/forum/posts/${postId}/comments`);
+  return response.json();
+};
+
+export const createComment = async (postId, commentData) => {
+  const response = await fetch(`${API_BASE_URL}/api/forum/posts/${postId}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify(commentData)
+  });
+  if (!response.ok) {
+    throw new Error('Erreur lors de la création du commentaire');
+  }
+  return response.json();
+};

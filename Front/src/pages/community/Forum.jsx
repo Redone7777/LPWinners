@@ -9,11 +9,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
-  SearchIcon, FilterIcon, FireIcon, 
-  ChatIcon, TrophyIcon, PenIcon, 
-  ArrowRightIcon, UserIcon, InfoIcon 
+import {
+  SearchIcon, FilterIcon, FireIcon,
+  ChatIcon, TrophyIcon, PenIcon,
+  ArrowRightIcon, UserIcon, InfoIcon
 } from '../../components/icons/Icons';
+import { getForumPosts } from '../../shared/services/api';
 
 // --- MOCK DATA ---
 const TRENDING_TOPICS = [
@@ -254,10 +255,38 @@ const HolographicCard = ({ post, index }) => {
 const Forum = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [posts, setPosts] = useState(POSTS); // Initialiser avec les données de démo
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const containerRef = useRef(null);
   const { scrollY } = useScroll();
   const headerY = useTransform(scrollY, [0, 300], [0, -100]);
   const headerOpacity = useTransform(scrollY, [0, 300], [1, 0.5]);
+
+  useEffect(() => {
+    // NOTE: Appel API commenté car le backend n'est pas encore prêt
+    // Décommenter une fois le backend opérationnel
+    /*
+    const fetchPosts = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await getForumPosts();
+        setPosts(data);
+      } catch (err) {
+        console.error('Erreur lors du chargement des posts:', err);
+        setError('Impossible de charger les posts. Utilisation des données de démonstration.');
+        // Garder les données de démo en cas d'erreur
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+    */
+    // Utilise les données de démo pour l'instant
+    setLoading(false);
+  }, []);
 
   return (
     <div className="min-h-screen text-white overflow-x-hidden selection:bg-purple-500/30">
@@ -376,11 +405,31 @@ const Forum = () => {
           </div>
         </motion.div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+            {error}
+          </div>
+        )}
+
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12">
+            <div className="
+              w-12 h-12 mx-auto mb-4
+              border-4 border-arcane-500/30 border-t-arcane-500
+              rounded-full animate-spin
+            " />
+            <p className="text-white/50">Chargement des posts...</p>
+          </div>
+        )}
+
         {/* --- HOLOGRAPHIC GRID --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
-          {POSTS.map((post, index) => (
-            <HolographicCard key={post.id} post={post} index={index} />
-          ))}
+        {!loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-min">
+            {posts.map((post, index) => (
+              <HolographicCard key={post.id} post={post} index={index} />
+            ))}
           
           {/* Create New Prompt Card (Always last) */}
           <motion.div 
@@ -397,7 +446,8 @@ const Forum = () => {
               <p className="text-white/40 text-sm">Partagez vos connaissances avec le Nexus.</p>
             </div>
           </motion.div>
-        </div>
+          </div>
+        )}
 
       </div>
     </div>

@@ -29,6 +29,7 @@ import {
   FighterIcon,
   TankIcon
 } from '../../components/icons';
+import { getChampions, getItems, getSpells, getRunes } from '../../shared/services/api';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DONNÉES DE DÉMONSTRATION
@@ -102,7 +103,9 @@ function GameData() {
   const [champions, setChampions] = useState(DEMO_CHAMPIONS);
   const [items, setItems] = useState(DEMO_ITEMS);
   const [spells, setSpells] = useState(DEMO_SPELLS);
+  const [runes, setRunes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeRole, setActiveRole] = useState('all');
   const [activePosition, setActivePosition] = useState('all');
@@ -110,7 +113,46 @@ function GameData() {
   const [priceRange, setPriceRange] = useState([480, 6800]);
 
   useEffect(() => {
-    // TODO: Fetch data from API based on activeTab
+    // NOTE: Les appels API sont commentés car le backend n'est pas encore prêt
+    // Décommenter cette fonction une fois que le backend est opérationnel
+    /*
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        switch (activeTab) {
+          case 'champions':
+            const championsData = await getChampions();
+            setChampions(championsData);
+            break;
+          case 'items':
+            const itemsData = await getItems();
+            setItems(itemsData);
+            break;
+          case 'spells':
+            const spellsData = await getSpells();
+            setSpells(spellsData);
+            break;
+          case 'runes':
+            const runesData = await getRunes();
+            setRunes(runesData);
+            break;
+          default:
+            break;
+        }
+      } catch (err) {
+        console.error('Erreur lors du chargement des données:', err);
+        setError('Impossible de charger les données. Utilisation des données de démonstration.');
+        // Garder les données de démo en cas d'erreur
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+    */
+    // Utilise les données de démo pour l'instant
+    setLoading(false);
   }, [activeTab]);
 
   // Filtrage des champions
@@ -320,10 +362,34 @@ function GameData() {
             CONTENU PRINCIPAL
         ═══════════════════════════════════════════════════════════════════ */}
         <div className="flex-1">
+          {/* Message d'erreur */}
+          {error && (
+            <div className="
+              mb-4 p-4 rounded-xl
+              bg-red-500/10 border border-red-500/30
+              text-red-400 text-sm
+            ">
+              {error}
+            </div>
+          )}
+
+          {/* Loader */}
+          {loading && (
+            <GlassCard padding="lg" variant="subtle">
+              <div className="text-center py-12">
+                <div className="
+                  w-12 h-12 mx-auto mb-4
+                  border-4 border-arcane-500/30 border-t-arcane-500
+                  rounded-full animate-spin
+                " />
+                <p className="text-white/50">Chargement...</p>
+              </div>
+            </GlassCard>
+          )}
           {/* ─────────────────────────────────────────────────────────────────
               CHAMPIONS
           ───────────────────────────────────────────────────────────────────── */}
-          {activeTab === 'champions' && (
+          {activeTab === 'champions' && !loading && (
             <>
               <GlassCard padding="lg" variant="subtle">
                 <div className="
@@ -391,7 +457,7 @@ function GameData() {
           {/* ─────────────────────────────────────────────────────────────────
               ITEMS
           ───────────────────────────────────────────────────────────────────── */}
-          {activeTab === 'items' && (
+          {activeTab === 'items' && !loading && (
             <GlassCard padding="lg" variant="subtle">
               <div className="
                 grid gap-4
@@ -416,7 +482,7 @@ function GameData() {
           {/* ─────────────────────────────────────────────────────────────────
               SORTS
           ───────────────────────────────────────────────────────────────────── */}
-          {activeTab === 'spells' && (
+          {activeTab === 'spells' && !loading && (
             <GlassCard padding="lg" variant="subtle">
               <div className="
                 grid gap-4
@@ -440,13 +506,56 @@ function GameData() {
           {/* ─────────────────────────────────────────────────────────────────
               RUNES
           ───────────────────────────────────────────────────────────────────── */}
-          {activeTab === 'runes' && (
+          {activeTab === 'runes' && !loading && (
             <GlassCard padding="lg" variant="subtle">
-              <div className="text-center py-16 text-white/50">
-                <MageIcon size={48} className="mx-auto mb-4 opacity-50" />
-                <p className="text-lg">Runes à venir...</p>
-                <p className="text-sm mt-2">Cette section sera bientôt disponible</p>
-              </div>
+              {runes.length > 0 ? (
+                <div className="
+                  grid gap-4
+                  grid-cols-2
+                  sm:grid-cols-3
+                  lg:grid-cols-4
+                ">
+                  {runes.map((rune) => (
+                    <div key={rune.id} className="
+                      group relative
+                      bg-white/[0.03] hover:bg-white/[0.08]
+                      border border-white/[0.06] hover:border-arcane-500/30
+                      rounded-xl p-4
+                      cursor-pointer
+                      transition-all duration-300
+                      hover:shadow-[0_0_20px_rgba(168,85,247,0.15)]
+                      flex items-center gap-4
+                    ">
+                      <div className="
+                        w-14 h-14 flex-shrink-0
+                        rounded-lg overflow-hidden
+                        bg-void-800
+                      ">
+                        <img
+                          src={rune.image_url}
+                          alt={rune.name}
+                          className="w-full h-full object-cover"
+                          draggable="false"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-medium text-white/90">
+                          {rune.name}
+                        </h3>
+                        <p className="text-sm text-white/50 mt-1">
+                          {rune.category}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-16 text-white/50">
+                  <MageIcon size={48} className="mx-auto mb-4 opacity-50" />
+                  <p className="text-lg">Runes à venir...</p>
+                  <p className="text-sm mt-2">Cette section sera bientôt disponible</p>
+                </div>
+              )}
             </GlassCard>
           )}
         </div>

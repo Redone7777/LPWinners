@@ -6,13 +6,14 @@
  * Design: Liquid Glass & Neon
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useParams } from 'react-router-dom';
-import { 
-  ChevronLeftIcon, UserIcon, ChatIcon, BellIcon, 
-  BotLaneIcon, MarksmanIcon, StatsIcon 
+import {
+  ChevronLeftIcon, UserIcon, ChatIcon, BellIcon,
+  BotLaneIcon, MarksmanIcon, StatsIcon
 } from '../../components/icons/Icons';
+import { getForumPost, getPostComments, createComment } from '../../shared/services/api';
 
 // --- MOCK DATA: Guide pour Jinx ---
 const MOCK_GUIDE = {
@@ -78,11 +79,61 @@ const MOCK_GUIDE = {
 
 const ForumPost = () => {
   const { id } = useParams();
+  const [guide, setGuide] = useState(MOCK_GUIDE); // Initialiser avec les données de démo
+  const [comments, setComments] = useState(MOCK_GUIDE.comments);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [votes, setVotes] = useState(MOCK_GUIDE.stats.votes);
   const [commentText, setCommentText] = useState("");
   const [showComments, setShowComments] = useState(true);
   const [visibleComments, setVisibleComments] = useState(3);
-  const guide = MOCK_GUIDE; // Dans une vraie app, fetch data based on id
+  const [postingComment, setPostingComment] = useState(false);
+
+  const handlePostComment = async () => {
+    if (!commentText.trim()) return;
+
+    setPostingComment(true);
+    try {
+      const newComment = await createComment(id, { text: commentText });
+      setComments([newComment, ...comments]);
+      setCommentText('');
+    } catch (err) {
+      console.error('Erreur lors de la création du commentaire:', err);
+      alert('Impossible de poster le commentaire. Veuillez réessayer.');
+    } finally {
+      setPostingComment(false);
+    }
+  };
+
+  useEffect(() => {
+    // NOTE: Appels API commentés car le backend n'est pas encore prêt
+    // Décommenter une fois le backend opérationnel
+    /*
+    const fetchPostData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const postData = await getForumPost(id);
+        setGuide(postData);
+        setVotes(postData.stats?.votes || 0);
+
+        // Charger les commentaires
+        const commentsData = await getPostComments(id);
+        setComments(commentsData);
+      } catch (err) {
+        console.error('Erreur lors du chargement du post:', err);
+        setError('Impossible de charger le post. Utilisation des données de démonstration.');
+        // Garder les données de démo en cas d'erreur
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPostData();
+    */
+    // Utilise les données de démo pour l'instant
+    setLoading(false);
+  }, [id]);
 
   // Animations
   const containerVariants = {
@@ -342,7 +393,7 @@ const ForumPost = () => {
             <div className="mt-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                  <ChatIcon /> Commentaires <span className="text-base text-white/30 font-normal">({guide.comments.length})</span>
+                  <ChatIcon /> Commentaires <span className="text-base text-white/30 font-normal">({comments.length})</span>
                 </h2>
                 
                 {/* Toggle Switch */}
@@ -382,8 +433,12 @@ const ForumPost = () => {
                         />
                         <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
                           <span className="text-xs text-white/30">Markdown supported</span>
-                          <button className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-colors">
-                            Post Comment
+                          <button
+                            onClick={handlePostComment}
+                            disabled={postingComment || !commentText.trim()}
+                            className="bg-purple-600 hover:bg-purple-500 text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {postingComment ? 'Posting...' : 'Post Comment'}
                           </button>
                         </div>
                       </div>
@@ -391,7 +446,7 @@ const ForumPost = () => {
 
                     {/* Comments List */}
                     <div className="space-y-4">
-                      {guide.comments.slice(0, visibleComments).map((comment) => (
+                      {comments.slice(0, visibleComments).map((comment) => (
                         <motion.div 
                           key={comment.id} 
                           initial={{ opacity: 0, y: 10 }}
@@ -423,12 +478,12 @@ const ForumPost = () => {
                     </div>
                     
                     {/* Load More Button */}
-                    {visibleComments < guide.comments.length && (
-                      <button 
-                        onClick={() => setVisibleComments(prev => Math.min(prev + 3, guide.comments.length))}
+                    {visibleComments < comments.length && (
+                      <button
+                        onClick={() => setVisibleComments(prev => Math.min(prev + 3, comments.length))}
                         className="w-full mt-4 py-3 bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl text-white/60 text-sm font-bold transition-all"
                       >
-                        Show {Math.min(3, guide.comments.length - visibleComments)} more comments...
+                        Show {Math.min(3, comments.length - visibleComments)} more comments...
                       </button>
                     )}
                   </motion.div>

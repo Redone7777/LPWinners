@@ -12,20 +12,41 @@ import { useAuth } from '../../shared/context/AuthContext';
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
-  const { login } = useAuth();
+  const { login, register, error } = useAuth();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: ''
   });
+  const [localError, setLocalError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login({
-      name: formData.username || formData.email.split('@')[0] || 'Invoqueur',
-      email: formData.email,
-      avatar: null
-    });
+    setLocalError('');
+    setIsSubmitting(true);
+
+    try {
+      let result;
+      if (isLogin) {
+        result = await login(formData.email, formData.password);
+      } else {
+        if (!formData.username) {
+          setLocalError('Le nom d\'utilisateur est requis');
+          setIsSubmitting(false);
+          return;
+        }
+        result = await register(formData.username, formData.email, formData.password);
+      }
+
+      if (!result.success) {
+        setLocalError(result.error);
+      }
+    } catch (err) {
+      setLocalError('Une erreur est survenue. Veuillez réessayer.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -188,10 +209,22 @@ function Auth() {
                 )}
               </div>
 
+              {/* Message d'erreur */}
+              {(localError || error) && (
+                <div className="
+                  p-3 rounded-lg
+                  bg-red-500/10 border border-red-500/30
+                  text-red-400 text-sm
+                ">
+                  {localError || error}
+                </div>
+              )}
+
               {/* Bouton de soumission amélioré */}
               <div className="pt-4">
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="
                     group relative w-full py-4 rounded-xl
                     overflow-hidden
@@ -199,6 +232,7 @@ function Auth() {
                     transition-all duration-200
                     hover:scale-[1.02]
                     active:scale-[0.98]
+                    disabled:opacity-50 disabled:cursor-not-allowed
                   "
                 >
                   {/* Background gradient animé */}
@@ -229,7 +263,7 @@ function Auth() {
 
                   {/* Texte */}
                   <span className="relative z-10 text-white">
-                    {isLogin ? 'Se connecter' : "S'inscrire"}
+                    {isSubmitting ? 'Chargement...' : (isLogin ? 'Se connecter' : "S'inscrire")}
                   </span>
                 </button>
               </div>
