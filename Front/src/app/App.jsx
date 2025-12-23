@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from '../shared/context/AuthContext';
 import PageTransition from '../components/common/PageTransition';
 import Home from '../pages/user/Home';
 import GameData from '../pages/game/GameData';
+import TestAPI from '../pages/test';
 import ChampionDetail from '../pages/champions/ChampionDetail';
 import Profile from '../pages/user/Profile';
 import Players from '../pages/community/Players';
@@ -38,6 +39,7 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<PageTransition><Home /></PageTransition>} />
         <Route path="/login" element={<PageTransition><PublicRoute><Auth /></PublicRoute></PageTransition>} />
         <Route path="/game-data" element={<PageTransition><GameData /></PageTransition>} />
+        <Route path="/test" element={<PageTransition><TestAPI /></PageTransition>} />
         <Route path="/champions/:id" element={<PageTransition><ChampionDetail /></PageTransition>} />
         <Route path="/players" element={<PageTransition><Players /></PageTransition>} />
         <Route path="/players/:name" element={<PageTransition><Players /></PageTransition>} />

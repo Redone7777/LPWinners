@@ -177,16 +177,28 @@ const NewPost = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] pb-20 relative overflow-hidden">
-      {/* Ambient Background */}
-      <div className="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-blue-900/10 via-purple-900/10 to-[#0a0a0f] z-0 pointer-events-none" />
-      <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-purple-600/5 rounded-full blur-[150px] pointer-events-none" />
-
+    <div className="min-h-screen pb-20 relative overflow-hidden">
       {/* Header */}
       <div className="relative z-10 container mx-auto px-6 pt-8 pb-6">
-        <Link to="/forum" className="flex items-center gap-2 text-white/50 hover:text-white transition-colors w-fit mb-8">
-          <ChevronLeftIcon size={18} /> Retour au Forum
-        </Link>
+        <header className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => navigate(-1)}
+            className="
+              p-2 rounded-xl
+              bg-white/[0.05] border border-white/10
+              text-white/60
+              hover:bg-white/[0.08] hover:text-white/90
+              transition-all duration-200
+            "
+          >
+            <ChevronLeftIcon size={20} />
+          </button>
+          <div>
+            <h1 className="text-2xl font-bold text-white">Forum</h1>
+          </div>
+        </div>
+      </header>
 
         <div className="flex items-center justify-between mb-8">
           <div>
