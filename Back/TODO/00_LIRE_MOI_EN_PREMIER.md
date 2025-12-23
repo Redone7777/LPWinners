@@ -2,9 +2,34 @@
 
 ## Yanis, commence ici
 
+**CONSEIL DE VIE** : Si tu es bloqué ou si tu as besoin d'aide, utilise **Codex**. C'est la lumière ! Il t'aidera à comprendre tes erreurs et à t'orienter si tu es perdu.
+
 Ce dossier contient tout ce dont tu as besoin pour créer le backend de LP Winners.
 
-**RÈGLE** : Lis les fichiers dans l'ordre numérique. Ne saute pas.
+**RÈGLE N°1 : WORKFLOW GIT (OBLIGATOIRE)**
+Tu ne travailles JAMAIS directement sur la branche `dev` ou `main`.
+1. Modifie ton code dans la branche `yanis`.
+2. Commit tes changements.
+3. Va sur la branche `dev`.
+4. Fusionne (`merge`) ton travail.
+
+**Exemple de commandes à suivre :**
+```bash
+# 1. Travailler sur ta branche
+git switch yanis
+# ... fais tes modifs ...
+git add .
+git commit -m "Ajout du feature"
+
+# 2. Mettre à jour la branche dev (sécurité)
+git switch dev
+git merge yanis
+
+# 3. Retourner bosser
+git switch yanis
+```
+
+**RÈGLE N°2** : Lis les fichiers dans l'ordre numérique. Ne saute pas.
 
 ## Ordre de lecture
 
@@ -170,6 +195,9 @@ Si erreur, le terminal affiche la stack trace complète. Lis-la.
 ### 5. Ne demande pas à une IA de tout générer
 Si tu fais ça, tu n'apprendras rien et tu seras bloqué au premier bug.
 
+### 6. Workflow Git
+Tu vas toujours modifier dans la branche `yanis`, puis tu vas commit, puis aller dans la branche `dev` par sécurité et faire un `git merge yanis`.
+
 ---
 
 ## Quand tu es bloqué
@@ -195,6 +223,9 @@ Sinon Python ne reconnaît pas les dossiers comme des modules.
 
 ### 6. Demande à Redwan ou Jimmy
 Mais montre-leur l'erreur exacte et ce que tu as déjà essayé.
+
+### 7. Utilise Codex
+Si tu es bloqué ou si tu as besoin d'aide, utilise **Codex**. C'est la lumière ! Il t'aidera à comprendre tes erreurs et à t'orienter si tu es perdu.
 
 ---
 
