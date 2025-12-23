@@ -11,6 +11,7 @@ import Players from '../pages/community/Players';
 import Notifications from '../pages/user/Notifications';
 import Forum from '../pages/community/Forum';
 import ForumPost from '../pages/community/ForumPost';
+import NewPost from '../pages/community/NewPost';
 import ProStats from '../pages/game/ProStats';
 import Auth from '../pages/auth/Auth';
 import '../styles/index.css';
@@ -43,6 +44,7 @@ const AnimatedRoutes = () => {
         <Route path="/profile" element={<PageTransition><PrivateRoute><Profile /></PrivateRoute></PageTransition>} />
         <Route path="/notifications" element={<PageTransition><Notifications /></PageTransition>} />
         <Route path="/forum" element={<PageTransition><Forum /></PageTransition>} />
+        <Route path="/forum/new" element={<PageTransition><NewPost /></PageTransition>} />
         <Route path="/forum/:id" element={<PageTransition><ForumPost /></PageTransition>} />
         <Route path="/pro-stats" element={<PageTransition><ProStats /></PageTransition>} />
       </Routes>

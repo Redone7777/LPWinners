@@ -443,6 +443,12 @@
     mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   }
 
+  /* Text stroke effects */
+  .text-stroke-thin {
+    -webkit-text-stroke: 1px currentColor;
+    text-stroke: 1px currentColor;
+  }
+
   /* ─────────────────────────────────────────────────────────────────────────
      RANGE SLIDER - Barre de progression animée
      ───────────────────────────────────────────────────────────────────────── */

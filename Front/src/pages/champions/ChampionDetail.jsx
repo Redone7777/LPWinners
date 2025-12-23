@@ -10,6 +10,130 @@ import { GlassCard } from '../../components/ui';
 import { ChevronLeftIcon } from '../../components/icons';
 import { getChampion } from '../../shared/services/api';
 
+// Mock data pour démonstration
+const MOCK_CHAMPIONS = {
+  'jinx': {
+    id: 'jinx',
+    name: 'Jinx',
+    title: 'La Gâchette Folle',
+    role: 'marksman',
+    image_url: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_0.jpg',
+    difficulty: 6,
+    lore: 'Jinx, criminelle impulsive et maniaco-dépressive de Zaun, vit pour semer le chaos sans se soucier des conséquences. Armée d\'un arsenal d\'armes mortelles, elle déclenche les explosions les plus bruyantes et les plus éclatantes pour laisser sa marque sur Piltover. Jinx déteste l\'ennui et savoure joyeusement le carnage qu\'elle provoque.',
+    stats: {
+      hp: 610,
+      mana: 260,
+      armor: 28,
+      magic_resist: 30,
+      attack_damage: 59,
+      attack_speed: 0.625,
+      movement_speed: 325
+    },
+    abilities: [
+      {
+        key: 'Passif',
+        name: 'Enthousiasme !',
+        description: 'Jinx gagne énormément de vitesse de déplacement lorsqu\'elle participe à l\'élimination d\'un champion, d\'une tourelle ou d\'un inhibiteur ennemi.',
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/passive/Jinx_Passive.png'
+      },
+      {
+        key: 'Q',
+        name: 'Changez !',
+        description: 'Jinx modifie ses armes principales entre Pow-Pow, une minigun qui augmente la vitesse d\'attaque, et Fishbones, un lance-roquettes qui inflige des dégâts de zone et augmente la portée d\'attaque.',
+        cooldown: 0.9,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/JinxQ.png'
+      },
+      {
+        key: 'W',
+        name: 'Zap !',
+        description: 'Jinx tire un projectile électrique qui inflige des dégâts au premier ennemi touché et le ralentit.',
+        cooldown: 8,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/JinxW.png'
+      },
+      {
+        key: 'E',
+        name: 'Chompers !',
+        description: 'Jinx lance une ligne de pièges qui explosent après 0,5s, immobilisant les champions ennemis.',
+        cooldown: 24,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/JinxE.png'
+      },
+      {
+        key: 'R',
+        name: 'Super Méga Roquette Mortelle !',
+        description: 'Jinx tire une super roquette sur une longue portée qui explose au contact du premier champion ennemi, infligeant des dégâts massifs qui augmentent en fonction des PV manquants de la cible.',
+        cooldown: 90,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/JinxR.png'
+      }
+    ],
+    tips: [
+      'Utilisez votre passif pour poursuivre ou vous échapper après avoir obtenu une élimination',
+      'Le canon lance-roquettes est excellent pour poke à distance et farmer',
+      'Placez vos Chompers derrière vous pour vous protéger des assassins',
+      'Votre ultime inflige plus de dégâts aux cibles avec peu de PV'
+    ]
+  },
+  'ahri': {
+    id: 'ahri',
+    name: 'Ahri',
+    title: 'La Renarde à Neuf Queues',
+    role: 'mage',
+    image_url: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_0.jpg',
+    difficulty: 5,
+    lore: 'Dotée d\'une connexion naturelle avec la magie latente de Runeterra, Ahri est une vastaya qui peut remodeler sa magie en sphères d\'énergie brute. Elle aime manipuler ses ennemis en jouant avec leurs émotions avant de dévorer leur essence vitale.',
+    stats: {
+      hp: 570,
+      mana: 418,
+      armor: 21,
+      magic_resist: 30,
+      attack_damage: 53,
+      attack_speed: 0.668,
+      movement_speed: 330
+    },
+    abilities: [
+      {
+        key: 'Passif',
+        name: 'Essence volée',
+        description: 'Lorsqu\'Ahri touche un ennemi avec une compétence, elle gagne une charge. À 9 charges, elle soigne ses PV avec son prochain sort.',
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/passive/Ahri_SoulEater.png'
+      },
+      {
+        key: 'Q',
+        name: 'Orbe d\'illusion',
+        description: 'Ahri envoie son orbe et le récupère, infligeant des dégâts magiques à l\'aller et des dégâts réels au retour.',
+        cooldown: 7,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/AhriOrbofDeception.png'
+      },
+      {
+        key: 'W',
+        name: 'Feu follet',
+        description: 'Ahri libère trois feux follets qui pourchassent et attaquent les ennemis proches.',
+        cooldown: 9,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/AhriFoxFire.png'
+      },
+      {
+        key: 'E',
+        name: 'Charme',
+        description: 'Ahri envoie un baiser qui charme et inflige des dégâts au premier ennemi touché.',
+        cooldown: 12,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/AhriSeduce.png'
+      },
+      {
+        key: 'R',
+        name: 'Assaut spirituel',
+        description: 'Ahri effectue jusqu\'à trois dashs rapides, tirant des éclats magiques sur les champions ennemis proches.',
+        cooldown: 130,
+        image_url: 'https://ddragon.leagueoflegends.com/cdn/14.3.1/img/spell/AhriTumble.png'
+      }
+    ],
+    tips: [
+      'Utilisez votre Charme pour initier un combo complet',
+      'Votre orbe inflige des dégâts réels au retour, idéal contre les tanks',
+      'Gardez au moins un dash de votre ultime pour vous échapper',
+      'Roamez beaucoup pour profiter de votre mobilité'
+    ]
+  }
+};
+
 function ChampionDetail() {
   const { id } = useParams();
   const [champion, setChampion] = useState(null);
@@ -36,9 +160,19 @@ function ChampionDetail() {
 
     fetchChampion();
     */
-    // Pour l'instant, afficher un message d'erreur
-    setLoading(false);
-    setError('Page de détail du champion disponible une fois le backend connecté.');
+
+    // Utilisation des données mock pour démonstration
+    setLoading(true);
+    setTimeout(() => {
+      const mockChampion = MOCK_CHAMPIONS[id];
+      if (mockChampion) {
+        setChampion(mockChampion);
+        setError(null);
+      } else {
+        setError('Champion non trouvé dans les données de démonstration.');
+      }
+      setLoading(false);
+    }, 500);
   }, [id]);
 
   if (loading) {

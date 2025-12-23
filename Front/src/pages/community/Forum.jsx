@@ -432,20 +432,22 @@ const Forum = () => {
             ))}
           
           {/* Create New Prompt Card (Always last) */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="col-span-1 border-2 border-dashed border-white/10 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center gap-4 hover:border-purple-500/50 hover:bg-purple-500/5 transition-all cursor-pointer group min-h-[300px]"
-          >
-            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <PenIcon size={24} className="text-white/30 group-hover:text-purple-400" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white mb-1">Lancer une Discussion</h3>
-              <p className="text-white/40 text-sm">Partagez vos connaissances avec le Nexus.</p>
-            </div>
-          </motion.div>
+          <Link to="/forum/new" className="col-span-1">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="h-full border-2 border-dashed border-white/10 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center gap-4 hover:border-purple-500/50 hover:bg-purple-500/5 transition-all cursor-pointer group min-h-[300px]"
+            >
+              <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <PenIcon size={24} className="text-white/30 group-hover:text-purple-400" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white mb-1">Lancer une Discussion</h3>
+                <p className="text-white/40 text-sm">Partagez vos connaissances avec le Nexus.</p>
+              </div>
+            </motion.div>
+          </Link>
           </div>
         )}
 
