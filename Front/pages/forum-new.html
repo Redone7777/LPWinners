@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create a new guide or discussion on LPWinners">
+    <title>Créer un Post - LPWinners</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/pages/forum-new.css">
+
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%238b5cf6'/%3E%3Cstop offset='100%25' style='stop-color:%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'%3ELP%3C/text%3E%3C/svg%3E">
+</head>
+
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="app" id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html" class="sidebar-logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                </a>
+                <span class="sidebar-logo-text">LPWinners</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../index.html" class="sidebar-nav-item" data-page="home">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Home</span>
+                </a>
+
+                <a href="collections.html" class="sidebar-nav-item" data-page="collections">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Collections</span>
+                </a>
+
+
+                <div class="sidebar-divider"></div>
+
+                <a href="forum.html" class="sidebar-nav-item active" data-page="forum">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Forum</span>
+                </a>
+
+                <a href="players.html" class="sidebar-nav-item" data-page="players">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Players</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Settings</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="overlay sidebar-overlay" id="sidebar-overlay"></div>
+
+
+        <div class="app-content">
+
+            <main class="main-content">
+                <!-- Page Header with Steps -->
+                <div class="wizard-header">
+                    <div class="wizard-header-left">
+                        <a href="forum.html" class="page-header-back">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6" />
+                            </svg>
+                            Forum
+                        </a>
+                        <h1 class="page-title">
+                            Créer un <span class="page-title-accent">Post</span>
+                        </h1>
+                        <p class="page-subtitle">Partagez vos stratégies avec la communauté</p>
+                    </div>
+
+                    <!-- Step Indicator -->
+                    <div class="wizard-steps">
+                        <div class="wizard-step active" data-step="1">
+                            <div class="wizard-step-indicator">
+                                <span class="wizard-step-number">1</span>
+                            </div>
+                            <span class="wizard-step-label">Type & Champion</span>
+                        </div>
+                        <div class="wizard-step-line"></div>
+                        <div class="wizard-step" data-step="2">
+                            <div class="wizard-step-indicator">
+                                <span class="wizard-step-number">2</span>
+                            </div>
+                            <span class="wizard-step-label">Build & Loadout</span>
+                        </div>
+                        <div class="wizard-step-line"></div>
+                        <div class="wizard-step" data-step="3">
+                            <div class="wizard-step-indicator">
+                                <span class="wizard-step-number">3</span>
+                            </div>
+                            <span class="wizard-step-label">Content & Tips</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wizard Content -->
+                <div class="wizard-layout">
+                    <!-- Main Form Area -->
+                    <div class="wizard-main">
+                        <!-- Step 1: Type & Champion -->
+                        <div class="wizard-panel active" id="step-1">
+                            <!-- Post Type Selection -->
+                            <div class="wizard-section glass-card">
+                                <div class="wizard-section-header">
+                                    <span class="wizard-section-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                                        </svg>
+                                    </span>
+                                    <h3>Type de Post</h3>
+                                </div>
+
+                                <div class="post-type-grid">
+                                    <label class="post-type-card active">
+                                        <input type="radio" name="post-type" value="guide" checked>
+                                        <div class="post-type-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="3" width="7" height="7" />
+                                                <rect x="14" y="3" width="7" height="7" />
+                                                <rect x="14" y="14" width="7" height="7" />
+                                                <rect x="3" y="14" width="7" height="7" />
+                                            </svg>
+                                        </div>
+                                        <span class="post-type-check">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20 6 9 17l-5-5" />
+                                            </svg>
+                                        </span>
+                                        <h4 class="post-type-title">Guide Complet</h4>
+                                        <p class="post-type-desc">Build, runes, combos détaillés</p>
+                                    </label>
+
+                                    <label class="post-type-card">
+                                        <input type="radio" name="post-type" value="discussion">
+                                        <div class="post-type-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path
+                                                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                            </svg>
+                                        </div>
+                                        <span class="post-type-check">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20 6 9 17l-5-5" />
+                                            </svg>
+                                        </span>
+                                        <h4 class="post-type-title">Discussion</h4>
+                                        <p class="post-type-desc">Débat ou question ouverte</p>
+                                    </label>
+
+                                    <label class="post-type-card">
+                                        <input type="radio" name="post-type" value="question">
+                                        <div class="post-type-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                                <path d="M12 17h.01" />
+                                            </svg>
+                                        </div>
+                                        <span class="post-type-check">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20 6 9 17l-5-5" />
+                                            </svg>
+                                        </span>
+                                        <h4 class="post-type-title">Question</h4>
+                                        <p class="post-type-desc">Demander de l'aide</p>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Title Input -->
+                            <div class="wizard-section glass-card">
+                                <div class="wizard-section-header">
+                                    <h3>Titre du Post</h3>
+                                </div>
+                                <input type="text" class="form-input wizard-title-input" id="post-title"
+                                    placeholder="Ex: JINX - LA DÉESSE DE L'HYPERCARRY | Guide Ultime S14">
+                                <p class="form-hint">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M12 16v-4" />
+                                        <path d="M12 8h.01" />
+                                    </svg>
+                                    Utilisez un titre accrocheur et descriptif
+                                </p>
+                            </div>
+
+                            <!-- Champion Selection -->
+                            <div class="wizard-section glass-card">
+                                <div class="wizard-section-header">
+                                    <span class="wizard-section-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8" />
+                                            <path d="m21 21-4.3-4.3" />
+                                        </svg>
+                                    </span>
+                                    <h3>Sélectionner un Champion</h3>
+                                </div>
+
+                                <div class="search-input">
+                                    <span class="search-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8" />
+                                            <path d="m21 21-4.3-4.3" />
+                                        </svg>
+                                    </span>
+                                    <input type="text" class="form-input" id="champion-search"
+                                        placeholder="Rechercher un champion...">
+                                </div>
+
+                                <div class="champion-select-grid" id="champion-select">
+                                    <button class="champion-select-item selected" data-champion="jinx">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Jinx.png"
+                                            alt="Jinx">
+                                    </button>
+                                    <button class="champion-select-item" data-champion="yasuo">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Yasuo.png"
+                                            alt="Yasuo">
+                                    </button>
+                                    <button class="champion-select-item" data-champion="thresh">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Thresh.png"
+                                            alt="Thresh">
+                                    </button>
+                                    <button class="champion-select-item" data-champion="ahri">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Ahri.png"
+                                            alt="Ahri">
+                                    </button>
+                                    <button class="champion-select-item" data-champion="leesin">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/LeeSin.png"
+                                            alt="Lee Sin">
+                                    </button>
+                                    <button class="champion-select-item" data-champion="evelynn">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Evelynn.png"
+                                            alt="Evelynn">
+                                    </button>
+                                    <button class="champion-select-item" data-champion="fiora">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Fiora.png"
+                                            alt="Fiora">
+                                    </button>
+                                    <button class="champion-select-item" data-champion="vayne">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Vayne.png"
+                                            alt="Vayne">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Build & Loadout (Hidden by default) -->
+                        <div class="wizard-panel" id="step-2">
+                            <div class="wizard-section glass-card">
+                                <div class="wizard-section-header">
+                                    <h3>Runes</h3>
+                                </div>
+                                <p class="text-secondary">Coming in next step...</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Content & Tips (Hidden by default) -->
+                        <div class="wizard-panel" id="step-3">
+                            <div class="wizard-section glass-card">
+                                <div class="wizard-section-header">
+                                    <h3>Content</h3>
+                                </div>
+                                <p class="text-secondary">Coming in next step...</p>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="wizard-nav">
+                            <button class="btn btn-ghost" id="prev-btn" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m15 18-6-6 6-6" />
+                                </svg>
+                                Précédent
+                            </button>
+                            <button class="btn btn-primary" id="next-btn">
+                                Suivant
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Live Preview Panel -->
+                    <aside class="wizard-preview glass-card">
+                        <div class="wizard-preview-header">
+                            <span class="preview-indicator"></span>
+                            <span>Aperçu en Direct</span>
+                        </div>
+
+                        <div class="wizard-preview-content">
+                            <div class="preview-field">
+                                <span class="preview-label">Titre</span>
+                                <span class="preview-value" id="preview-title">Votre titre apparaîtra ici...</span>
+                            </div>
+
+                            <div class="preview-divider"></div>
+
+                            <div class="preview-section">
+                                <span class="preview-section-title">Progression</span>
+
+                                <div class="preview-progress-item">
+                                    <span class="preview-progress-label">Type</span>
+                                    <span class="preview-progress-value" id="preview-type">Guide</span>
+                                </div>
+
+                                <div class="preview-progress-item">
+                                    <span class="preview-progress-label">Champion</span>
+                                    <span class="preview-progress-indicator pending" id="preview-champion">●</span>
+                                </div>
+
+                                <div class="preview-progress-item">
+                                    <span class="preview-progress-label">Build</span>
+                                    <span class="preview-progress-value text-muted" id="preview-build">0/6</span>
+                                </div>
+
+                                <div class="preview-progress-item">
+                                    <span class="preview-progress-label">Contenu</span>
+                                    <span class="preview-progress-value text-muted" id="preview-content">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">LPWinners</span>
+                    </div>
+                    <nav class="footer-links">
+                        <a href="#" class="footer-link">About</a>
+                        <a href="#" class="footer-link">Privacy</a>
+                        <a href="#" class="footer-link">Terms</a>
+                        <a href="#" class="footer-link">Contact</a>
+                    </nav>
+                    <p class="footer-copyright">© 2024 LPWinners. Not affiliated with Riot Games.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="../js/app.js" type="module"></script>
+    <script src="../js/components/wizard.js" type="module"></script>
+</body>
+
+</html>

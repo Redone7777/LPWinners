@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Votre profil sur LPWinners">
+    <title>Profil - LPWinners</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/pages/profile.css">
+
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%238b5cf6'/%3E%3Cstop offset='100%25' style='stop-color:%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'%3ELP%3C/text%3E%3C/svg%3E">
+</head>
+
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="app" id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html" class="sidebar-logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                </a>
+                <span class="sidebar-logo-text">LPWinners</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../index.html" class="sidebar-nav-item" data-page="home">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Home</span>
+                </a>
+
+                <a href="collections.html" class="sidebar-nav-item" data-page="collections">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Collections</span>
+                </a>
+
+
+                <div class="sidebar-divider"></div>
+
+                <a href="forum.html" class="sidebar-nav-item" data-page="forum">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Forum</span>
+                </a>
+
+                <a href="players.html" class="sidebar-nav-item" data-page="players">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Players</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-nav-item sidebar-auth-item active">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="5" />
+                            <path d="M20 21a8 8 0 1 0-16 0" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Profil</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="overlay sidebar-overlay" id="sidebar-overlay"></div>
+
+        <div class="app-content">
+            <main class="main-content">
+                <!-- Profile Header -->
+                <div class="profile-header glass-card-accent">
+                    <div class="profile-banner"></div>
+                    <div class="profile-header-content">
+                        <div class="profile-avatar-container">
+                            <img id="profile-avatar"
+                                src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/1.png" alt="Avatar"
+                                class="profile-avatar">
+                            <div class="profile-level" id="profile-level">100</div>
+                        </div>
+                        <div class="profile-info">
+                            <h1 class="profile-username" id="profile-username">Invocateur</h1>
+                            <div class="profile-rank">
+                                <img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/gold.png"
+                                    alt="Rank" class="profile-rank-icon">
+                                <span id="profile-rank">Gold II</span>
+                                <span class="profile-lp" id="profile-lp">45 LP</span>
+                            </div>
+                            <p class="profile-join-date" id="profile-join-date">Membre depuis Décembre 2024</p>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-ghost btn-sm" id="logout-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" x2="9" y1="12" y2="12" />
+                                </svg>
+                                Déconnexion
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="profile-stats">
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon stat-icon-games">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polygon points="10 8 16 12 10 16 10 8" />
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="stat-games">0</span>
+                            <span class="stat-label">Parties Jouées</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon stat-icon-winrate">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                                <path d="M4 22h16" />
+                                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="stat-winrate">0%</span>
+                            <span class="stat-label">Winrate</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon stat-icon-posts">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="stat-posts">0</span>
+                            <span class="stat-label">Posts Créés</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon stat-icon-guides">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7" />
+                                <rect x="14" y="3" width="7" height="7" />
+                                <rect x="14" y="14" width="7" height="7" />
+                                <rect x="3" y="14" width="7" height="7" />
+                            </svg>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="stat-guides">0</span>
+                            <span class="stat-label">Guides Créés</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favorite Champion -->
+                <section class="profile-section">
+                    <h2 class="section-title">Champion Favori</h2>
+                    <div class="favorite-champion glass-card">
+                        <img id="favorite-champion-img"
+                            src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_0.jpg"
+                            alt="Favorite Champion" class="favorite-champion-splash">
+                        <div class="favorite-champion-overlay">
+                            <div class="favorite-champion-info">
+                                <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Jinx.png"
+                                    alt="Jinx" class="favorite-champion-icon">
+                                <div>
+                                    <h3 id="favorite-champion-name">Jinx</h3>
+                                    <p class="text-muted">La Démone du Feu</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Activity -->
+                <section class="profile-section">
+                    <h2 class="section-title">Activité Récente</h2>
+                    <div class="activity-list">
+                        <div class="activity-item glass-card">
+                            <div class="activity-icon activity-post">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <span class="activity-title">Nouveau commentaire sur "Guide Jinx S14"</span>
+                                <span class="activity-time text-muted">Il y a 2 heures</span>
+                            </div>
+                        </div>
+                        <div class="activity-item glass-card">
+                            <div class="activity-icon activity-game">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <span class="activity-title">Victoire avec Jinx (15/3/8)</span>
+                                <span class="activity-time text-muted">Il y a 5 heures</span>
+                            </div>
+                        </div>
+                        <div class="activity-item glass-card">
+                            <div class="activity-icon activity-rank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                                    <path d="M4 22h16" />
+                                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                                </svg>
+                            </div>
+                            <div class="activity-content">
+                                <span class="activity-title">Promu à Gold II !</span>
+                                <span class="activity-time text-muted">Hier</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">LPWinners</span>
+                    </div>
+                    <nav class="footer-links">
+                        <a href="#" class="footer-link">About</a>
+                        <a href="#" class="footer-link">Privacy</a>
+                        <a href="#" class="footer-link">Terms</a>
+                        <a href="#" class="footer-link">Contact</a>
+                    </nav>
+                    <p class="footer-copyright">© 2024 LPWinners. Not affiliated with Riot Games.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth } from '../js/auth.js';
+
+        // Require auth for profile page
+        if (!auth.requireAuth()) {
+            // Will redirect to login
+        } else {
+            // Load user data
+            const user = auth.getCurrentUser();
+            if (user) {
+                document.getElementById('profile-avatar').src = user.avatar;
+                document.getElementById('profile-username').textContent = user.username;
+                document.getElementById('profile-rank').textContent = user.rank;
+                document.getElementById('profile-lp').textContent = user.lp + ' LP';
+                document.getElementById('profile-level').textContent = user.level;
+                document.getElementById('stat-games').textContent = user.stats.gamesPlayed;
+                document.getElementById('stat-winrate').textContent = user.stats.winRate + '%';
+                document.getElementById('stat-posts').textContent = user.stats.postsCreated;
+                document.getElementById('stat-guides').textContent = user.stats.guidesCreated;
+
+                const joinDate = new Date(user.joinDate);
+                const months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+                document.getElementById('profile-join-date').textContent =
+                    `Membre depuis ${months[joinDate.getMonth()]} ${joinDate.getFullYear()}`;
+            }
+
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                auth.logout();
+            });
+        }
+    </script>
+    <script src="../js/app.js" type="module"></script>
+</body>
+
+</html>
