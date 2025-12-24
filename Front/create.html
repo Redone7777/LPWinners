@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Guide - LPWinners</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="dynamic-island">
+        <a href="index.html" class="brand">
+            <span class="logo-icon">⚡</span>
+            <span class="logo-text">LPWinners</span>
+        </a>
+        <div class="menu-items">
+            <a href="create.html" class="nav-link active">Créer</a>
+            <a href="guide.html" class="nav-link">Guide</a>
+            <a href="champions.html" class="nav-link">Champions</a>
+        </div>
+        <div class="auth-action">
+            <a href="login.html" class="nav-btn">Connexion / Inscription</a>
+        </div>
+    </nav>
+
+    <main class="create-container">
+        <h1>Créer votre guide</h1>
+
+        <form id="guideForm">
+            <!-- 1. Titre -->
+            <section class="form-section">
+                <label for="guideTitle">Titre du guide</label>
+                <input type="text" id="guideTitle" placeholder="Ex: Mon guide pour Yasuo (1v9 garanti)">
+            </section>
+
+            <!-- 2. Roles -->
+            <section class="form-section">
+                <h2>Rôle</h2>
+                <div class="roles-container">
+                    <div class="role-option" onclick="pickRole('top')">
+                        <img src="images/roles/top.webp" alt="Top">
+                    </div>
+                    <div class="role-option" onclick="pickRole('jungle')">
+                        <img src="images/roles/jungle.webp" alt="Jungle">
+                    </div>
+                    <div class="role-option" onclick="pickRole('middle')">
+                        <img src="images/roles/middle.webp" alt="Mid">
+                    </div>
+                    <div class="role-option" onclick="pickRole('bottom')">
+                        <img src="images/roles/bottom.webp" alt="Bot">
+                    </div>
+                    <div class="role-option" onclick="pickRole('support')">
+                        <img src="images/roles/support.webp" alt="Support">
+                    </div>
+                </div>
+                <input type="hidden" id="selectedRole" name="role">
+            </section>
+
+            <!-- 3. Champion -->
+            <section class="form-section">
+                <h2>Champion</h2>
+                <input type="text" id="searchChampion" placeholder="Rechercher un champion..." onkeyup="filterChamps()">
+                <div id="championGrid" class="grid-container">
+                    <!-- Images champions -->
+                </div>
+                <input type="hidden" id="selectedChampionName">
+            </section>
+
+            <!-- 4. Skins -->
+            <section class="form-section" id="sectionSkins" style="display: none;">
+                <h2>Skin</h2>
+                <div id="skinsContainer" class="horizontal-scroll">
+                    <!-- Images skins -->
+                </div>
+                <input type="hidden" id="selectedSkin">
+            </section>
+
+            <!-- 5. Spells (Image Selection) -->
+            <section class="form-section">
+                <h2>Sorts (Spells)</h2>
+                <div id="spellsGrid" class="image-selection-grid small-icons">
+                    <!-- Images Sorts cliquables via JS -->
+                </div>
+                <h3>Sorts sélectionnés :</h3>
+                <div id="selectedSpells" class="selected-items-row">
+                    <!-- Les sorts choisis apparaissent ici -->
+                </div>
+            </section>
+
+            <!-- 6. Items (Image Selection) -->
+            <section class="form-section">
+                <h2>Objets (Items)</h2>
+                <div class="filters">
+                    <input type="text" id="searchItem" placeholder="Chercher un item..." onkeyup="filterItems()">
+                    <select id="itemRarity" onchange="filterItems()">
+                        <option value="all">Tous</option>
+                        <option value="Basique">Basique</option>
+                        <option value="Epique">Epique</option>
+                        <option value="Legendaire">Legendaire</option>
+                    </select>
+                </div>
+
+                <div id="itemGrid" class="image-selection-grid">
+                    <!-- Images Items cliquables via JS -->
+                </div>
+
+                <h3>Items choisis :</h3>
+                <div id="selectedItems" class="selected-items-row">
+                    <!-- Items choisis s'affichent ici en images -->
+                </div>
+            </section>
+
+            <!-- 7. Runes (Image Selection) -->
+            <section class="form-section">
+                <h2>Runes</h2>
+                <div id="runesGrid" class="image-selection-grid">
+                    <!-- Images Runes via JS -->
+                    <p>Chargement...</p>
+                </div>
+                <input type="hidden" id="selectedRune">
+            </section>
+
+            <!-- 8. Passif (Image Display) -->
+            <section class="form-section">
+                <h2>Passif</h2>
+                <div id="passiveContainer" class="passive-display">
+                    <!-- Passif via JS -->
+                </div>
+            </section>
+
+            <button type="submit" class="btn-primary">Créer le guide</button>
+        </form>
+    </main>
+
+    <script src="create.js"></script>
+</body>
+
+</html>
