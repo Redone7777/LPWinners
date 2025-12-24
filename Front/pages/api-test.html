@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LPWinners - API Test Console</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #2d2d3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .config-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .config-panel label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .config-panel input {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .config-panel input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .endpoints-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .endpoint-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .endpoint-card:hover {
+            border-color: var(--accent);
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .endpoint-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .method-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .endpoint-path {
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .test-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .test-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .test-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .test-btn.loading::after {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .endpoint-body {
+            padding: 1.5rem;
+        }
+
+        .params-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .params-section h4 {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .params-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .param-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .param-input label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            min-width: 70px;
+        }
+
+        .param-input select,
+        .param-input input[type="text"] {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+
+        .param-input select:focus,
+        .param-input input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .response-section {
+            display: none;
+        }
+
+        .response-section.visible {
+            display: block;
+        }
+
+        .response-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .response-header h4 {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .status-badge.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--error);
+        }
+
+        .status-badge.pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .status-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .response-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .response-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .response-box {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .response-box-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .response-box-header span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent);
+        }
+
+        .response-box pre {
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            max-height: 300px;
+            overflow-y: auto;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .response-time {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .response-time strong {
+            color: var(--text-primary);
+        }
+
+        /* Summary panel */
+        .summary-panel {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-item .count {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .summary-item .label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .summary-item.success .count {
+            color: var(--success);
+        }
+
+        .summary-item.error .count {
+            color: var(--error);
+        }
+
+        .summary-item.pending .count {
+            color: var(--text-secondary);
+        }
+
+        .test-all-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .test-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+        }
+    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 API Test Console</h1>
+            <p class="subtitle">Testez et validez les endpoints de l'API LPWinners</p>
+        </header>
+
+        <div class="config-panel">
+            <label for="baseUrl">Base URL de l'API</label>
+            <input type="text" id="baseUrl" value="http://localhost:8000/api/v1"
+                placeholder="ex: http://localhost:8000/api/v1">
+        </div>
+
+        <div class="endpoints-grid" id="endpointsGrid">
+            <!-- Champions -->
+            <div class="endpoint-card" data-endpoint="champions">
+                <div class="endpoint-header">
+                    <div class="endpoint-info">
+                        <span class="method-badge">GET</span>
+                        <span class="endpoint-path">/champions</span>
+                    </div>
+                    <button class="test-btn" onclick="testEndpoint('champions')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Tester
+                    </button>
+                </div>
+                <div class="endpoint-body">
+                    <div class="params-section">
+                        <h4>Paramètres (optionnels)</h4>
+                        <div class="params-grid">
+                            <div class="param-input">
+                                <label>role</label>
+                                <select id="champions-role">
+                                    <option value="">Tous</option>
+                                    <option value="top">Top</option>
+                                    <option value="jungle">Jungle</option>
+                                    <option value="mid">Mid</option>
+                                    <option value="bot">Bot</option>
+                                    <option value="support">Support</option>
+                                </select>
+                            </div>
+                            <div class="param-input">
+                                <label>difficulty</label>
+                                <select id="champions-difficulty">
+                                    <option value="">Toutes</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="response-section" id="champions-response">
+                        <div class="response-header">
+                            <h4>Réponse</h4>
+                            <span class="status-badge pending" id="champions-status">
+                                <span>En attente</span>
+                            </span>
+                        </div>
+                        <div class="response-content">
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Requête</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('champions-request')">📋</button>
+                                </div>
+                                <pre id="champions-request"></pre>
+                            </div>
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Réponse</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('champions-body')">📋</button>
+                                </div>
+                                <pre id="champions-body"></pre>
+                            </div>
+                        </div>
+                        <div class="response-time" id="champions-time"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items -->
+            <div class="endpoint-card" data-endpoint="items">
+                <div class="endpoint-header">
+                    <div class="endpoint-info">
+                        <span class="method-badge">GET</span>
+                        <span class="endpoint-path">/items</span>
+                    </div>
+                    <button class="test-btn" onclick="testEndpoint('items')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Tester
+                    </button>
+                </div>
+                <div class="endpoint-body">
+                    <div class="params-section">
+                        <h4>Paramètres (optionnels)</h4>
+                        <div class="params-grid">
+                            <div class="param-input">
+                                <label>category</label>
+                                <select id="items-category">
+                                    <option value="">Toutes</option>
+                                    <option value="damage">Damage</option>
+                                    <option value="defense">Defense</option>
+                                    <option value="magic">Magic</option>
+                                    <option value="boots">Boots</option>
+                                    <option value="consumable">Consumable</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="response-section" id="items-response">
+                        <div class="response-header">
+                            <h4>Réponse</h4>
+                            <span class="status-badge pending" id="items-status">
+                                <span>En attente</span>
+                            </span>
+                        </div>
+                        <div class="response-content">
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Requête</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('items-request')">📋</button>
+                                </div>
+                                <pre id="items-request"></pre>
+                            </div>
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Réponse</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('items-body')">📋</button>
+                                </div>
+                                <pre id="items-body"></pre>
+                            </div>
+                        </div>
+                        <div class="response-time" id="items-time"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Runes -->
+            <div class="endpoint-card" data-endpoint="runes">
+                <div class="endpoint-header">
+                    <div class="endpoint-info">
+                        <span class="method-badge">GET</span>
+                        <span class="endpoint-path">/runes</span>
+                    </div>
+                    <button class="test-btn" onclick="testEndpoint('runes')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Tester
+                    </button>
+                </div>
+                <div class="endpoint-body">
+                    <div class="params-section">
+                        <h4>Paramètres (optionnels)</h4>
+                        <div class="params-grid">
+                            <div class="param-input">
+                                <label>tree</label>
+                                <select id="runes-tree">
+                                    <option value="">Tous</option>
+                                    <option value="Precision">Precision</option>
+                                    <option value="Domination">Domination</option>
+                                    <option value="Sorcellerie">Sorcellerie</option>
+                                    <option value="Volonté">Volonté</option>
+                                    <option value="Inspiration">Inspiration</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="response-section" id="runes-response">
+                        <div class="response-header">
+                            <h4>Réponse</h4>
+                            <span class="status-badge pending" id="runes-status">
+                                <span>En attente</span>
+                            </span>
+                        </div>
+                        <div class="response-content">
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Requête</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('runes-request')">📋</button>
+                                </div>
+                                <pre id="runes-request"></pre>
+                            </div>
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Réponse</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('runes-body')">📋</button>
+                                </div>
+                                <pre id="runes-body"></pre>
+                            </div>
+                        </div>
+                        <div class="response-time" id="runes-time"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spells -->
+            <div class="endpoint-card" data-endpoint="spells">
+                <div class="endpoint-header">
+                    <div class="endpoint-info">
+                        <span class="method-badge">GET</span>
+                        <span class="endpoint-path">/spells</span>
+                    </div>
+                    <button class="test-btn" onclick="testEndpoint('spells')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Tester
+                    </button>
+                </div>
+                <div class="endpoint-body">
+                    <div class="params-section">
+                        <h4>Paramètres (optionnels)</h4>
+                        <div class="params-grid">
+                            <div class="param-input">
+                                <label>championId</label>
+                                <input type="text" id="spells-championId" placeholder="ex: Ahri">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="response-section" id="spells-response">
+                        <div class="response-header">
+                            <h4>Réponse</h4>
+                            <span class="status-badge pending" id="spells-status">
+                                <span>En attente</span>
+                            </span>
+                        </div>
+                        <div class="response-content">
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Requête</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('spells-request')">📋</button>
+                                </div>
+                                <pre id="spells-request"></pre>
+                            </div>
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Réponse</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('spells-body')">📋</button>
+                                </div>
+                                <pre id="spells-body"></pre>
+                            </div>
+                        </div>
+                        <div class="response-time" id="spells-time"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summoners -->
+            <div class="endpoint-card" data-endpoint="summoners">
+                <div class="endpoint-header">
+                    <div class="endpoint-info">
+                        <span class="method-badge">GET</span>
+                        <span class="endpoint-path">/summoners</span>
+                    </div>
+                    <button class="test-btn" onclick="testEndpoint('summoners')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        Tester
+                    </button>
+                </div>
+                <div class="endpoint-body">
+                    <div class="params-section">
+                        <h4>Paramètres</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Aucun paramètre requis</p>
+                    </div>
+                    <div class="response-section" id="summoners-response">
+                        <div class="response-header">
+                            <h4>Réponse</h4>
+                            <span class="status-badge pending" id="summoners-status">
+                                <span>En attente</span>
+                            </span>
+                        </div>
+                        <div class="response-content">
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Requête</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('summoners-request')">📋</button>
+                                </div>
+                                <pre id="summoners-request"></pre>
+                            </div>
+                            <div class="response-box">
+                                <div class="response-box-header">
+                                    <span>Réponse</span>
+                                    <button class="copy-btn" onclick="copyToClipboard('summoners-body')">📋</button>
+                                </div>
+                                <pre id="summoners-body"></pre>
+                            </div>
+                        </div>
+                        <div class="response-time" id="summoners-time"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-panel">
+        <div class="summary-item success">
+            <div class="count" id="success-count">0</div>
+            <div class="label">Validés</div>
+        </div>
+        <div class="summary-item error">
+            <div class="count" id="error-count">0</div>
+            <div class="label">Erreurs</div>
+        </div>
+        <div class="summary-item pending">
+            <div class="count" id="pending-count">5</div>
+            <div class="label">En attente</div>
+        </div>
+        <button class="test-all-btn" onclick="testAllEndpoints()">
+            🚀 Tester tout
+        </button>
+    </div>
+
+    <script>
+        const endpoints = {
+            champions: {
+                path: '/champions',
+                params: ['role', 'difficulty']
+            },
+            items: {
+                path: '/items',
+                params: ['category']
+            },
+            runes: {
+                path: '/runes',
+                params: ['tree']
+            },
+            spells: {
+                path: '/spells',
+                params: ['championId']
+            },
+            summoners: {
+                path: '/summoners',
+                params: []
+            }
+        };
+
+        const results = {
+            success: 0,
+            error: 0,
+            pending: 5
+        };
+
+        function getBaseUrl() {
+            return document.getElementById('baseUrl').value.trim();
+        }
+
+        function buildUrl(endpoint) {
+            const config = endpoints[endpoint];
+            const baseUrl = getBaseUrl();
+            let url = `${baseUrl}${config.path}`;
+
+            const params = new URLSearchParams();
+            config.params.forEach(param => {
+                const element = document.getElementById(`${endpoint}-${param}`);
+                if (element && element.value) {
+                    params.append(param, element.value);
+                }
+            });
+
+            const queryString = params.toString();
+            if (queryString) {
+                url += `?${queryString}`;
+            }
+
+            return url;
+        }
+
+        async function testEndpoint(endpoint) {
+            const btn = document.querySelector(`[data-endpoint="${endpoint}"] .test-btn`);
+            const responseSection = document.getElementById(`${endpoint}-response`);
+            const statusBadge = document.getElementById(`${endpoint}-status`);
+            const requestPre = document.getElementById(`${endpoint}-request`);
+            const bodyPre = document.getElementById(`${endpoint}-body`);
+            const timeDiv = document.getElementById(`${endpoint}-time`);
+
+            // Show loading state
+            btn.classList.add('loading');
+            btn.disabled = true;
+            responseSection.classList.add('visible');
+            statusBadge.className = 'status-badge pending';
+            statusBadge.innerHTML = '<span>Chargement...</span>';
+
+            const url = buildUrl(endpoint);
+            requestPre.textContent = `GET ${url}\n\nHeaders:\n  Content-Type: application/json`;
+
+            const startTime = performance.now();
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(0);
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusBadge.className = 'status-badge success';
+                    statusBadge.innerHTML = `
+                        <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>${response.status} OK</span>
+                    `;
+                    updateResults('success', endpoint);
+                } else {
+                    statusBadge.className = 'status-badge error';
+                    statusBadge.innerHTML = `
+                        <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <span>${response.status} ${response.statusText}</span>
+                    `;
+                    updateResults('error', endpoint);
+                }
+
+                bodyPre.textContent = JSON.stringify(data, null, 2);
+                timeDiv.innerHTML = `⏱️ Temps de réponse: <strong>${duration}ms</strong> | Status: <strong>${response.status}</strong>`;
+
+            } catch (error) {
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(0);
+
+                statusBadge.className = 'status-badge error';
+                statusBadge.innerHTML = `
+                    <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    <span>Erreur réseau</span>
+                `;
+                bodyPre.textContent = `Error: ${error.message}\n\nCeci peut indiquer que:\n- Le serveur n'est pas démarré\n- L'URL de base est incorrecte\n- Un problème CORS`;
+                timeDiv.innerHTML = `⏱️ Temps écoulé: <strong>${duration}ms</strong> | Status: <strong>FAILED</strong>`;
+                updateResults('error', endpoint);
+            }
+
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        }
+
+        function updateResults(type, endpoint) {
+            // Check if this endpoint was previously tested
+            const card = document.querySelector(`[data-endpoint="${endpoint}"]`);
+            const previousStatus = card.dataset.status;
+
+            if (previousStatus === 'success') results.success--;
+            else if (previousStatus === 'error') results.error--;
+            else results.pending--;
+
+            if (type === 'success') results.success++;
+            else results.error++;
+
+            card.dataset.status = type;
+
+            document.getElementById('success-count').textContent = results.success;
+            document.getElementById('error-count').textContent = results.error;
+            document.getElementById('pending-count').textContent = results.pending;
+        }
+
+        async function testAllEndpoints() {
+            const endpointNames = Object.keys(endpoints);
+            for (const endpoint of endpointNames) {
+                await testEndpoint(endpoint);
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                // Brief visual feedback could be added here
+            });
+        }
+    </script>
+</body>
+
+</html>

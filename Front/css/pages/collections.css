@@ -1,0 +1,250 @@
+/*
+ * LPWinners - Collections Page Styles
+ */
+
+/* Collections Tabs */
+.collections-tabs {
+    margin-bottom: var(--space-8);
+}
+
+.collections-tabs .tabs {
+    display: inline-flex;
+    width: auto;
+}
+
+.collections-tabs .tab {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Collections Grid */
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+}
+
+/* Collection Card */
+.collection-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    text-decoration: none;
+    min-height: 220px;
+}
+
+.collection-card-preview {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+}
+
+.collection-card-preview img {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-glass);
+    object-fit: cover;
+    transition: transform var(--transition-base), border-color var(--transition-base);
+}
+
+.collection-card:hover .collection-card-preview img {
+    border-color: var(--accent-primary);
+    transform: scale(1.05);
+}
+
+.collection-card-preview img:nth-child(2) {
+    transform: translateX(-8px);
+}
+
+.collection-card-preview img:nth-child(3) {
+    transform: translateX(-16px);
+}
+
+.collection-card-preview img:nth-child(4) {
+    transform: translateX(-24px);
+}
+
+.collection-card-preview img:nth-child(5) {
+    transform: translateX(-32px);
+}
+
+.collection-card:hover .collection-card-preview img:nth-child(2) {
+    transform: translateX(-8px) scale(1.05);
+}
+
+.collection-card:hover .collection-card-preview img:nth-child(3) {
+    transform: translateX(-16px) scale(1.05);
+}
+
+.collection-card:hover .collection-card-preview img:nth-child(4) {
+    transform: translateX(-24px) scale(1.05);
+}
+
+.collection-card:hover .collection-card-preview img:nth-child(5) {
+    transform: translateX(-32px) scale(1.05);
+}
+
+.collection-champion-icon {
+    width: 56px !important;
+    height: 56px !important;
+}
+
+.items-preview img,
+.spells-preview img {
+    width: 44px;
+    height: 44px;
+}
+
+.runes-preview img {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-elevated);
+    padding: 4px;
+}
+
+.collection-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-secondary);
+    transform: translateX(-32px);
+}
+
+.collection-card-content {
+    flex: 1;
+}
+
+.collection-card-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+}
+
+.collection-card-description {
+    line-height: 1.5;
+}
+
+.collection-card-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: var(--space-4);
+    color: var(--text-muted);
+    transition: all var(--transition-base);
+}
+
+.collection-card:hover .collection-card-arrow {
+    color: var(--accent-primary);
+    transform: translateX(4px);
+}
+
+/* Updates List */
+.updates-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.update-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+}
+
+.update-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.update-icon.update-buff {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-success);
+}
+
+.update-icon.update-nerf {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--accent-error);
+}
+
+.update-icon.update-adjust {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--accent-warning);
+}
+
+.update-content {
+    flex: 1;
+}
+
+.update-type {
+    display: block;
+    margin-bottom: var(--space-1);
+}
+
+.update-title {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+}
+
+.update-description {
+    line-height: 1.4;
+}
+
+/* Text color utilities */
+.text-success {
+    color: var(--accent-success);
+}
+
+.text-error {
+    color: var(--accent-error);
+}
+
+.text-warning {
+    color: var(--accent-warning);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .collections-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .collections-tabs .tabs {
+        flex-wrap: wrap;
+    }
+
+    .collection-card {
+        min-height: auto;
+        padding: var(--space-4);
+    }
+
+    .collection-card-preview img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .collection-champion-icon {
+        width: 44px !important;
+        height: 44px !important;
+    }
+}

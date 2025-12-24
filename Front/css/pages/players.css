@@ -1,0 +1,325 @@
+/*
+ * LPWinners - Players Page Styles
+ */
+
+/* Particles Canvas */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Players Content */
+.players-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Players Hero */
+.players-hero {
+    text-align: center;
+    padding: var(--space-16) 0;
+    margin-bottom: var(--space-8);
+}
+
+.players-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: var(--font-black);
+    line-height: 1;
+    margin-bottom: var(--space-4);
+}
+
+.players-subtitle {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto var(--space-10);
+}
+
+/* Search Container */
+.players-search-container {
+    padding: var(--space-5);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.players-search {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.players-region {
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    cursor: pointer;
+    min-width: 80px;
+}
+
+.players-search-input {
+    flex: 1;
+    display: flex;
+    gap: var(--space-2);
+}
+
+.players-search-input input {
+    flex: 1;
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+}
+
+.players-search-input input::placeholder {
+    color: var(--text-muted);
+}
+
+.players-search-input input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.players-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    margin-top: var(--space-3);
+}
+
+/* Recent Searches */
+.recent-searches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+}
+
+.recent-search {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    text-decoration: none;
+}
+
+.recent-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--border-glass);
+}
+
+.recent-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.recent-name {
+    display: block;
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+}
+
+.recent-tag {
+    font-size: var(--text-sm);
+}
+
+/* Featured Players */
+.featured-players-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+}
+
+.featured-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-5);
+    gap: var(--space-3);
+}
+
+.featured-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.featured-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-name {
+    font-size: var(--text-base);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+}
+
+.featured-team {
+    font-size: var(--text-sm);
+}
+
+.featured-role {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.featured-champions {
+    display: flex;
+    gap: var(--space-1);
+}
+
+.featured-champions img {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-glass);
+}
+
+/* Leaderboard */
+.leaderboard {
+    padding: 0;
+    overflow: hidden;
+}
+
+.leaderboard-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px 80px;
+    align-items: center;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-glass);
+    text-decoration: none;
+    transition: background var(--transition-fast);
+}
+
+.leaderboard-row:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-row:not(.leaderboard-header):hover {
+    background: var(--bg-elevated);
+}
+
+.leaderboard-header {
+    background: var(--bg-secondary);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.leaderboard-rank {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--text-muted);
+}
+
+.leaderboard-rank.rank-gold {
+    color: #ffd700;
+}
+
+.leaderboard-rank.rank-silver {
+    color: #c0c0c0;
+}
+
+.leaderboard-rank.rank-bronze {
+    color: #cd7f32;
+}
+
+.leaderboard-player {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.leaderboard-player img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.leaderboard-lp {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+}
+
+.leaderboard-winrate {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .featured-players-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .players-hero {
+        padding: var(--space-8) 0;
+    }
+
+    .players-search {
+        flex-direction: column;
+    }
+
+    .players-search-input {
+        flex-direction: column;
+    }
+
+    .recent-searches {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-players-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3);
+    }
+
+    .featured-player {
+        padding: var(--space-4);
+    }
+
+    .leaderboard-row {
+        grid-template-columns: 40px 1fr 80px 60px;
+        padding: var(--space-3);
+    }
+
+    .leaderboard-player img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .leaderboard-lp,
+    .leaderboard-winrate {
+        font-size: var(--text-sm);
+    }
+}

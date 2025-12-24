@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="LPWinners - Your premium League of Legends companion for builds, guides, and meta insights">
+    <meta name="theme-color" content="#8b5cf6">
+
+    <title>LPWinners - Dominate the Rift</title>
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/home.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%238b5cf6'/%3E%3Cstop offset='100%25' style='stop-color:%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'%3ELP%3C/text%3E%3C/svg%3E">
+</head>
+
+<body>
+    <!-- Three.js Canvas Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- App Container -->
+    <div class="app" id="app">
+        <!-- Sidebar - Centered Liquid Glass -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Logo -->
+            <div class="sidebar-logo">
+                <a href="index.html" class="sidebar-logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <a href="index.html" class="sidebar-nav-item active" data-page="home" title="Home">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                    </span>
+                </a>
+
+                <a href="pages/collections.html" class="sidebar-nav-item" data-page="collections" title="Database">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                    </span>
+                </a>
+
+                <div class="sidebar-divider"></div>
+
+                <a href="pages/forum.html" class="sidebar-nav-item" data-page="forum" title="Forum">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                    </span>
+                </a>
+
+                <a href="pages/players.html" class="sidebar-nav-item" data-page="players" title="Players">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                    </span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <a href="pages/login.html" class="sidebar-nav-item sidebar-auth-item" data-page="auth" title="Login">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" x2="3" y1="12" y2="12" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Login</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Mobile Sidebar Overlay -->
+        <div class="overlay sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Content Area -->
+        <div class="app-content">
+
+            <!-- Page Content -->
+            <main class="main-content" id="main-content" data-barba="container" data-barba-namespace="home">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-content">
+                        <div class="hero-badge animate-fadeInUp">
+                            <span class="badge badge-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                </svg>
+                                Patch 14.24 • Live
+                            </span>
+                        </div>
+                        <h1 class="hero-title animate-fadeInUp stagger-1">
+                            DOMINATE <br>
+                            <span class="text-gradient">THE RIFT</span>
+                        </h1>
+                        <p class="hero-subtitle animate-fadeInUp stagger-2">
+                            Master the meta with pro builds, comprehensive guides, and real-time analytics.
+                            Your journey to Challenger starts here.
+                        </p>
+                        <div class="hero-actions animate-fadeInUp stagger-3">
+                            <a href="pages/champions.html" class="btn btn-primary btn-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                                Explore Champions
+                            </a>
+                            <a href="pages/forum-new.html" class="btn btn-secondary btn-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 5v14" />
+                                    <path d="M5 12h14" />
+                                </svg>
+                                Create Build
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual animate-fadeInRight stagger-2">
+                        <div class="hero-card glass-card-accent">
+                            <div class="hero-card-header">
+                                <span class="badge badge-cyan">Top Pick</span>
+                                <span class="text-sm text-secondary">53.2% WR</span>
+                            </div>
+                            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_0.jpg" alt="Jinx"
+                                class="hero-card-image">
+                            <div class="hero-card-content">
+                                <h3 class="hero-card-name">Jinx</h3>
+                                <span class="hero-card-role text-muted">Marksman</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Featured Builds Section -->
+                <section class="section" id="featured-builds">
+                    <div class="section-header">
+                        <div>
+                            <h2 class="section-title">Featured Builds</h2>
+                            <p class="section-subtitle">Popular guides from the community</p>
+                        </div>
+                        <a href="pages/forum.html" class="btn btn-ghost">
+                            View All
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <div class="featured-builds-grid">
+                        <!-- Build Card 1 -->
+                        <article class="post-card reveal">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_1.jpg"
+                                alt="Jinx Guide" class="post-card-image">
+                            <div class="post-card-content">
+                                <div class="post-card-tags">
+                                    <span class="badge badge-primary">Guide</span>
+                                    <span class="badge badge-secondary">S14</span>
+                                </div>
+                                <h3 class="post-card-title">JINX : LA DÉESSE DE L'HYPERCARRY</h3>
+                                <p class="post-card-excerpt line-clamp-2">Tout ce que vous devez savoir pour pulvériser
+                                    les barres de vie en Saison 14.</p>
+                                <div class="post-card-meta">
+                                    <div class="post-card-author">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/29.png"
+                                            alt="Author" class="post-card-avatar">
+                                        <span class="text-sm">X_JinxMain_X</span>
+                                    </div>
+                                    <span class="text-xs text-muted">2h ago</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Build Card 2 -->
+                        <article class="post-card reveal stagger-1">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Thresh_0.jpg"
+                                alt="Thresh Guide" class="post-card-image">
+                            <div class="post-card-content">
+                                <div class="post-card-tags">
+                                    <span class="badge badge-primary">Guide</span>
+                                    <span class="badge badge-success">Mechanics</span>
+                                </div>
+                                <h3 class="post-card-title">Mécaniques de Thresh 101</h3>
+                                <p class="post-card-excerpt line-clamp-2">Prédire les flashs comme MadLife devient
+                                    facile avec ce guide.</p>
+                                <div class="post-card-meta">
+                                    <div class="post-card-author">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/23.png"
+                                            alt="Author" class="post-card-avatar">
+                                        <span class="text-sm">HookCity</span>
+                                    </div>
+                                    <span class="text-xs text-muted">4h ago</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Build Card 3 -->
+                        <article class="post-card reveal stagger-2">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_0.jpg"
+                                alt="Lee Sin Guide" class="post-card-image">
+                            <div class="post-card-content">
+                                <div class="post-card-tags">
+                                    <span class="badge badge-primary">Guide</span>
+                                    <span class="badge badge-warning">Advanced</span>
+                                </div>
+                                <h3 class="post-card-title">Lee Sin Jungle Domination</h3>
+                                <p class="post-card-excerpt line-clamp-2">Insec kick combos and early game pressure
+                                    tactics for climbing.</p>
+                                <div class="post-card-meta">
+                                    <div class="post-card-author">
+                                        <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/11.png"
+                                            alt="Author" class="post-card-avatar">
+                                        <span class="text-sm">LeeSinGod</span>
+                                    </div>
+                                    <span class="text-xs text-muted">6h ago</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Meta Trends Section -->
+                <section class="section" id="meta-trends">
+                    <div class="section-header">
+                        <div>
+                            <h2 class="section-title">Meta Trends</h2>
+                            <p class="section-subtitle">Top performing champions this patch</p>
+                        </div>
+                        <div class="pills">
+                            <button class="pill active">All Roles</button>
+                            <button class="pill">Top</button>
+                            <button class="pill">Jungle</button>
+                            <button class="pill">Mid</button>
+                            <button class="pill">Bot</button>
+                            <button class="pill">Support</button>
+                        </div>
+                    </div>
+
+                    <div class="meta-grid">
+                        <!-- Meta Champion Cards -->
+                        <div class="meta-champion-card glass-card reveal">
+                            <div class="meta-champion-rank tier-s">S</div>
+                            <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Jinx.png" alt="Jinx"
+                                class="meta-champion-icon">
+                            <div class="meta-champion-info">
+                                <span class="meta-champion-name">Jinx</span>
+                                <span class="meta-champion-role text-xs text-muted">Bot</span>
+                            </div>
+                            <div class="meta-champion-stats">
+                                <span class="meta-stat win">53.2%</span>
+                                <span class="meta-stat-label text-xs text-muted">WR</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-champion-card glass-card reveal stagger-1">
+                            <div class="meta-champion-rank tier-s">S</div>
+                            <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Ksante.png"
+                                alt="K'Sante" class="meta-champion-icon">
+                            <div class="meta-champion-info">
+                                <span class="meta-champion-name">K'Sante</span>
+                                <span class="meta-champion-role text-xs text-muted">Top</span>
+                            </div>
+                            <div class="meta-champion-stats">
+                                <span class="meta-stat win">52.8%</span>
+                                <span class="meta-stat-label text-xs text-muted">WR</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-champion-card glass-card reveal stagger-2">
+                            <div class="meta-champion-rank tier-a">A</div>
+                            <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/LeeSin.png"
+                                alt="Lee Sin" class="meta-champion-icon">
+                            <div class="meta-champion-info">
+                                <span class="meta-champion-name">Lee Sin</span>
+                                <span class="meta-champion-role text-xs text-muted">Jungle</span>
+                            </div>
+                            <div class="meta-champion-stats">
+                                <span class="meta-stat win">51.5%</span>
+                                <span class="meta-stat-label text-xs text-muted">WR</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-champion-card glass-card reveal stagger-3">
+                            <div class="meta-champion-rank tier-a">A</div>
+                            <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Ahri.png" alt="Ahri"
+                                class="meta-champion-icon">
+                            <div class="meta-champion-info">
+                                <span class="meta-champion-name">Ahri</span>
+                                <span class="meta-champion-role text-xs text-muted">Mid</span>
+                            </div>
+                            <div class="meta-champion-stats">
+                                <span class="meta-stat win">51.2%</span>
+                                <span class="meta-stat-label text-xs text-muted">WR</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-champion-card glass-card reveal stagger-4">
+                            <div class="meta-champion-rank tier-a">A</div>
+                            <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Thresh.png"
+                                alt="Thresh" class="meta-champion-icon">
+                            <div class="meta-champion-info">
+                                <span class="meta-champion-name">Thresh</span>
+                                <span class="meta-champion-role text-xs text-muted">Support</span>
+                            </div>
+                            <div class="meta-champion-stats">
+                                <span class="meta-stat win">50.8%</span>
+                                <span class="meta-stat-label text-xs text-muted">WR</span>
+                            </div>
+                        </div>
+
+                        <div class="meta-champion-card glass-card reveal stagger-5">
+                            <div class="meta-champion-rank tier-b">B</div>
+                            <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/Yasuo.png"
+                                alt="Yasuo" class="meta-champion-icon">
+                            <div class="meta-champion-info">
+                                <span class="meta-champion-name">Yasuo</span>
+                                <span class="meta-champion-role text-xs text-muted">Mid</span>
+                            </div>
+                            <div class="meta-champion-stats">
+                                <span class="meta-stat">49.5%</span>
+                                <span class="meta-stat-label text-xs text-muted">WR</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Links Section -->
+                <section class="section" id="quick-links">
+                    <div class="section-header">
+                        <h2 class="section-title">Quick Access</h2>
+                    </div>
+
+                    <div class="quick-links-grid">
+                        <a href="pages/champions.html" class="quick-link-card glass-card hover-lift reveal">
+                            <div class="quick-link-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <div class="quick-link-content">
+                                <h3 class="quick-link-title">Champions</h3>
+                                <p class="quick-link-description text-sm text-secondary">Browse all 168+ champions</p>
+                            </div>
+                            <div class="quick-link-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="pages/items.html" class="quick-link-card glass-card hover-lift reveal stagger-1">
+                            <div class="quick-link-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m7.5 4.27 9 5.15" />
+                                    <path
+                                        d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                                    <path d="m3.3 7 8.7 5 8.7-5" />
+                                    <path d="M12 22V12" />
+                                </svg>
+                            </div>
+                            <div class="quick-link-content">
+                                <h3 class="quick-link-title">Items</h3>
+                                <p class="quick-link-description text-sm text-secondary">Complete item database</p>
+                            </div>
+                            <div class="quick-link-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="pages/runes.html" class="quick-link-card glass-card hover-lift reveal stagger-2">
+                            <div class="quick-link-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="m16 12-4-4-4 4" />
+                                    <path d="m16 16-4-4-4 4" />
+                                </svg>
+                            </div>
+                            <div class="quick-link-content">
+                                <h3 class="quick-link-title">Runes</h3>
+                                <p class="quick-link-description text-sm text-secondary">Interactive rune trees</p>
+                            </div>
+                            <div class="quick-link-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="pages/forum.html" class="quick-link-card glass-card hover-lift reveal stagger-3">
+                            <div class="quick-link-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg>
+                            </div>
+                            <div class="quick-link-content">
+                                <h3 class="quick-link-title">Nexus Archives</h3>
+                                <p class="quick-link-description text-sm text-secondary">Community guides & discussions
+                                </p>
+                            </div>
+                            <div class="quick-link-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">LPWinners</span>
+                    </div>
+                    <nav class="footer-links">
+                        <a href="#" class="footer-link">About</a>
+                        <a href="#" class="footer-link">Privacy</a>
+                        <a href="#" class="footer-link">Terms</a>
+                        <a href="#" class="footer-link">Contact</a>
+                    </nav>
+                    <p class="footer-copyright">© 2024 LPWinners. Not affiliated with Riot Games.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js" type="module"></script>
+</body>
+
+</html>

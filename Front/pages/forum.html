@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LPWinners Nexus Archives - Community guides, discussions, and strategies">
+    <title>Nexus Archives - LPWinners</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/pages/forum.css">
+
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%238b5cf6'/%3E%3Cstop offset='100%25' style='stop-color:%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'%3ELP%3C/text%3E%3C/svg%3E">
+</head>
+
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="app" id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html" class="sidebar-logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                </a>
+                <span class="sidebar-logo-text">LPWinners</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../index.html" class="sidebar-nav-item" data-page="home">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Home</span>
+                </a>
+
+                <a href="collections.html" class="sidebar-nav-item" data-page="collections">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Collections</span>
+                </a>
+
+
+                <div class="sidebar-divider"></div>
+
+                <a href="forum.html" class="sidebar-nav-item active" data-page="forum">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Forum</span>
+                </a>
+
+                <a href="players.html" class="sidebar-nav-item" data-page="players">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Players</span>
+                </a>
+
+                <div class="sidebar-divider"></div>
+
+                <a href="notifications.html" class="sidebar-nav-item" data-page="notifications">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                            <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Notifications</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="profile.html" class="sidebar-nav-item" data-page="profile">
+                    <span class="sidebar-nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg>
+                    </span>
+                    <span class="sidebar-nav-text">Settings</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="overlay sidebar-overlay" id="sidebar-overlay"></div>
+
+
+        <div class="app-content">
+
+            <main class="main-content forum-content">
+                <!-- Forum Header -->
+                <div class="forum-header">
+                    <span class="badge badge-success forum-status">
+                        <span class="status-dot"></span>
+                        Système en ligne
+                    </span>
+                    <h1 class="forum-title">
+                        NEXUS<br>
+                        <span class="text-gradient">ARCHIVES</span>
+                    </h1>
+                </div>
+
+                <!-- Forum Navigation -->
+                <div class="forum-nav">
+                    <div class="forum-tabs">
+                        <button class="forum-tab active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M12 3v12" />
+                                <path d="m8 11 4 4 4-4" />
+                                <path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4" />
+                            </svg>
+                            Flux du Nexus
+                        </button>
+                        <button class="forum-tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                            </svg>
+                            Grimoire
+                        </button>
+                        <button class="forum-tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="6" />
+                                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                            </svg>
+                            Arène
+                        </button>
+                        <button class="forum-tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M17 11h1a3 3 0 0 1 0 6h-1" />
+                                <path d="M9 12v6" />
+                                <path d="M13 12v6" />
+                                <path
+                                    d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 2 11 2s2 1.5 3 1.5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z" />
+                                <path d="M5 8v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8" />
+                            </svg>
+                            Taverne
+                        </button>
+                    </div>
+                    <a href="forum-new.html" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14" />
+                            <path d="M5 12h14" />
+                        </svg>
+                        Nouveau
+                    </a>
+                </div>
+
+                <!-- Forum Posts Grid -->
+                <div class="forum-grid">
+                    <!-- Featured Post (Large) -->
+                    <a href="forum-post.html" class="forum-post forum-post-featured reveal">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_1.jpg"
+                            alt="Jinx Guide" class="forum-post-image">
+                        <div class="forum-post-overlay"></div>
+                        <div class="forum-post-content">
+                            <div class="forum-post-tags">
+                                <span class="badge badge-primary">Guide Ultime S14</span>
+                                <span class="badge badge-secondary">Tempo Mortel</span>
+                                <span class="badge badge-secondary">Stratégie 1V9</span>
+                            </div>
+                            <h2 class="forum-post-title">JINX : LA DÉESSE DE L'HYPERCARRY</h2>
+                            <p class="forum-post-excerpt">
+                                Tout ce que vous devez savoir pour pulvériser les barres de vie en Saison 14.
+                                Inclut des feuilles de calcul détaillées et les synergies de support.
+                            </p>
+                            <div class="forum-post-meta">
+                                <div class="forum-post-author">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/29.png"
+                                        alt="Author" class="forum-post-avatar">
+                                    <div class="forum-post-author-info">
+                                        <span class="forum-post-author-name">X_JinxMain_X</span>
+                                        <span class="forum-post-author-badge badge badge-cyan">GM</span>
+                                    </div>
+                                </div>
+                                <span class="forum-post-time text-muted">Il y a 2h</span>
+                            </div>
+                        </div>
+                        <div class="forum-post-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Post 2 -->
+                    <a href="forum-post.html" class="forum-post reveal stagger-1">
+                        <div class="forum-post-content">
+                            <h3 class="forum-post-title">T1 est-il inarrêtable ?</h3>
+                            <p class="forum-post-excerpt line-clamp-2">
+                                En regardant la synergie entre Zeus and Oner, je ne vois aucune équipe...
+                            </p>
+                            <div class="forum-post-meta">
+                                <div class="forum-post-author">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/6.png"
+                                        alt="Author" class="forum-post-avatar">
+                                    <span class="forum-post-author-name">FakerFanboy</span>
+                                </div>
+                                <span class="forum-post-time text-muted">Il y a 2h</span>
+                            </div>
+                        </div>
+                        <div class="forum-post-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Post 3 -->
+                    <a href="forum-post.html" class="forum-post reveal stagger-2">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Maokai_0.jpg" alt="Maokai"
+                            class="forum-post-image forum-post-image-small">
+                        <div class="forum-post-content">
+                            <h3 class="forum-post-title">Maokai Support est MORT</h3>
+                            <p class="forum-post-excerpt line-clamp-2">
+                                Riot a enfin nerfé le jet de rejeton. Voici les calculs expliquant...
+                            </p>
+                            <div class="forum-post-meta">
+                                <div class="forum-post-author">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/12.png"
+                                        alt="Author" class="forum-post-avatar">
+                                    <span class="forum-post-author-name">MetaSlave</span>
+                                </div>
+                                <span class="forum-post-time text-muted">Il y a 3h</span>
+                            </div>
+                        </div>
+                        <div class="forum-post-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Post 4 -->
+                    <a href="forum-post.html" class="forum-post reveal stagger-3">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_0.jpg"
+                            alt="Lee Sin" class="forum-post-image forum-post-image-small">
+                        <div class="forum-post-content">
+                            <h3 class="forum-post-title">Le Vol de Baron à 1 PV</h3>
+                            <p class="forum-post-excerpt line-clamp-2">
+                                Un Z aveugle dans l'antre du Baron. Vous devez voir ça.
+                            </p>
+                            <div class="forum-post-meta">
+                                <div class="forum-post-author">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/7.png"
+                                        alt="Author" class="forum-post-avatar">
+                                    <span class="forum-post-author-name">LeeSinGod</span>
+                                </div>
+                                <span class="forum-post-time text-muted">Il y a 4h</span>
+                            </div>
+                        </div>
+                        <div class="forum-post-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Post 5 -->
+                    <a href="forum-post.html" class="forum-post forum-post-medium reveal stagger-4">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Thresh_0.jpg" alt="Thresh"
+                            class="forum-post-image">
+                        <div class="forum-post-overlay"></div>
+                        <div class="forum-post-content">
+                            <h3 class="forum-post-title">Mécaniques de Thresh 101</h3>
+                            <p class="forum-post-excerpt">
+                                Prédire les flashs comme MadLife devient facile.
+                            </p>
+                            <div class="forum-post-meta">
+                                <div class="forum-post-author">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/23.png"
+                                        alt="Author" class="forum-post-avatar">
+                                    <span class="forum-post-author-name">HookCity</span>
+                                </div>
+                                <span class="forum-post-time text-muted">Il y a 5h</span>
+                            </div>
+                        </div>
+                        <div class="forum-post-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Post 6 -->
+                    <a href="forum-post.html" class="forum-post forum-post-medium reveal stagger-5">
+                        <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Lux_7.jpg"
+                            alt="Discussion" class="forum-post-image">
+                        <div class="forum-post-overlay"></div>
+                        <div class="forum-post-content">
+                            <h3 class="forum-post-title">Vanguard : Sauveur ou Spyware ?</h3>
+                            <p class="forum-post-excerpt">
+                                La communauté est divisée. Parlons de l'accès au niveau du noyau...
+                            </p>
+                            <div class="forum-post-meta">
+                                <div class="forum-post-author">
+                                    <img src="https://ddragon.leagueoflegends.com/cdn/14.24.1/img/profileicon/19.png"
+                                        alt="Author" class="forum-post-avatar">
+                                    <span class="forum-post-author-name">RitoPls</span>
+                                </div>
+                                <span class="forum-post-time text-muted">Il y a 6h</span>
+                            </div>
+                        </div>
+                        <div class="forum-post-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </a>
+
+                    <!-- Create Post CTA -->
+                    <a href="forum-new.html" class="forum-post forum-post-cta glass-card reveal stagger-6">
+                        <div class="forum-cta-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                                <path d="m15 5 4 4" />
+                            </svg>
+                        </div>
+                        <h3 class="forum-cta-title">Lancer une Discussion</h3>
+                        <p class="forum-cta-text text-secondary">Partagez vos connaissances avec le Nexus.</p>
+                    </a>
+                </div>
+
+                <!-- News Ticker -->
+                <div class="news-ticker">
+                    <div class="news-ticker-content">
+                        <span class="news-item">
+                            <span class="news-icon">🔥</span> T1 VS GEN : ANALYSE DE MATCH
+                        </span>
+                        <span class="news-item">
+                            <span class="news-icon">🔮</span> FUITES SUR LE REWORK DE SKARNER
+                        </span>
+                        <span class="news-item">
+                            <span class="news-icon">📉</span> CHUTE DU TAUX DE VICTOIRE DE YASUO
+                        </span>
+                        <span class="news-item">
+                            <span class="news-icon">✨</span> NOUVEAUX SKINS PRESTIGE RÉVÉLÉS
+                        </span>
+                        <span class="news-item">
+                            <span class="news-icon">🎮</span> PATCH 14.5 : CHANGEMENT DE MÉTA ADC
+                        </span>
+                        <span class="news-item">
+                            <span class="news-icon">🔥</span> T1 VS GEN : ANALYSE DE MATCH
+                        </span>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                        <span class="footer-logo-text">LPWinners</span>
+                    </div>
+                    <nav class="footer-links">
+                        <a href="#" class="footer-link">About</a>
+                        <a href="#" class="footer-link">Privacy</a>
+                        <a href="#" class="footer-link">Terms</a>
+                        <a href="#" class="footer-link">Contact</a>
+                    </nav>
+                    <p class="footer-copyright">© 2024 LPWinners. Not affiliated with Riot Games.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="../js/app.js" type="module"></script>
+</body>
+
+</html>
