@@ -147,3 +147,19 @@ CREATE TABLE utilisateurs (
     mail VARCHAR(100) UNIQUE NOT NULL,
     password TEXT NOT NULL
 );
+
+-- Forum posts table
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES utilisateurs(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    category VARCHAR(50),
+    champion_id INT REFERENCES champion(id) ON DELETE SET NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP
+);
+
+CREATE INDEX idx_posts_user_id ON posts(user_id);
+CREATE INDEX idx_posts_created_at ON posts(created_at DESC);
+CREATE INDEX idx_posts_category ON posts(category);

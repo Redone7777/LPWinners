@@ -1,6 +1,6 @@
 # LPWinners - Makefile
 
-.PHONY: front back install back-clean
+.PHONY: front back install clean
 
 front:
 	@echo "LPWinners sur http://localhost:3000"
@@ -13,5 +13,9 @@ back: install
 	@echo "API sur http://localhost:8000"
 	@cd Back && ./.venv/bin/uvicorn main:app --reload --port 8000
 
-back-clean:
+clean:
+	@echo "Nettoyage des fichiers temporaires..."
+	@find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type f -name "*.pyc" -delete 2>/dev/null || true
 	@rm -rf Back/.venv
+	@echo "Nettoyage terminé!"
